@@ -66,13 +66,14 @@ MIDDLEWARE = [
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('controlledmotives', default='controlledmotives'),
-        'USER': config('icontrolla', default='icontrolla'),
-        'PASSWORD': config('123Controller', default='123Controller'),
+        'NAME': config('DB_NAME', default='controlledmotives'),
+        'USER': config('DB_USER', default='icontrolla'),
+        'PASSWORD': config('DB_PASSWORD', default='123Controller'),
         'HOST': config('DB_HOST', default='localhost'),
         'PORT': config('DB_PORT', default=5432, cast=int),
     }
 }
+
 
 # Stripe API keys
 STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY')
