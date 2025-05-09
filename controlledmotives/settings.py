@@ -30,6 +30,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 CORS_ALLOW_ALL_ORIGINS = True
 # Application definition
+CORS_ALLOWED_ORIGINS = [
+    'https://controntrolledmotives-frontend-1.onrender.com',  # Your Render frontend
+]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
