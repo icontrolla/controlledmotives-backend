@@ -8,7 +8,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Security settings
 SECRET_KEY = config('SECRET_KEY')  # Use environment variable for security
 DEBUG = config('DEBUG', default=False, cast=bool)
-ALLOWED_HOSTS = ['controntrolledmotives-backend.onrender.com']
+
+ALLOWED_HOSTS = ['controlledmotives-backend.onrender.com']
+CORS_ALLOWED_ORIGINS = [
+    'https://controlledmotives-frontend-1.onrender.com',
+    'https://controlledmotives.com',
+]
 
 # Static and Media files
 STATIC_URL = '/static/'
