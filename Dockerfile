@@ -45,5 +45,7 @@ RUN python manage.py collectstatic --noinput
 # Expose the port Gunicorn will run on
 EXPOSE 8000
 
+SECRET_KEY='5qw33wsoda+_&**8*k&-m(-$08%svttlzzv0692ah7ethouql8'
+
 # Start app with Gunicorn
 CMD ["gunicorn", "controlledmotives.wsgi:application", "--bind", "0.0.0.0:8000"]
