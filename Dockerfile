@@ -30,6 +30,7 @@ WORKDIR /app
 # Copy requirements.txt first to leverage Docker caching
 COPY requirements.txt /app/
 
+
 # Install Python dependencies
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
