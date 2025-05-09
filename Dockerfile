@@ -1,8 +1,7 @@
-
 # Use the official Python 3.11 image from Docker Hub
 FROM python:3.11
 
-# Install system dependencies for Pillow
+# Install system dependencies for Pillow and others
 RUN apt-get update && apt-get install -y \
     libjpeg-dev \
     zlib1g-dev \
@@ -15,31 +14,34 @@ RUN apt-get update && apt-get install -y \
     libtiff5-dev \
     libopenjp2-7-dev \
     libpng-dev \
+    gcc \
+    libpq-dev \
+    curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Environment variables
+# Set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
+ENV DJANGO_SETTINGS_MODULE=controlledmotives.settings.production  # Adjust for production settings
 
 # Set working directory
 WORKDIR /app
 
-# Install system dependencies
-RUN apt-get update \
-    && apt-get install -y gcc libpq-dev curl \
-    && apt-get clean
+# Copy requirements.txt first to leverage Docker caching
+COPY requirements.txt /app/
 
 # Install Python dependencies
-COPY requirements.txt /app/
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
-# Copy project
+# Copy the rest of the application
 COPY . /app/
 
 # Collect static files (ensure DJANGO_SETTINGS_MODULE is set for this to succeed)
-ENV DJANGO_SETTINGS_MODULE=controlledmotives.settings
 RUN python manage.py collectstatic --noinput
+
+# Expose the port Gunicorn will run on
+EXPOSE 8000
 
 # Start app with Gunicorn
 CMD ["gunicorn", "controlledmotives.wsgi:application", "--bind", "0.0.0.0:8000"]
