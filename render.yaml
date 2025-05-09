@@ -11,13 +11,16 @@ services:
       - key: DJANGO_SETTINGS_MODULE
         value: "controlledmotives.settings"
       - key: ALLOWED_HOSTS
-        value: "controlledmotives.onrender.com"
+        value: "controlledmotives.onrender.com,controlledmotives-frontend.onrender.com"
       - key: SECRET_KEY
         generateValue: true
       - key: DEBUG
         value: "False"
       - key: DATABASE_URL
-        value: "YOUR_DATABASE_URL"  # Add database URL if required, based on your setup
+        fromDatabase:
+          name: controlledmotives-db
+          property: connectionString
+    runtime: python3.9   # Explicitly set the runtime to Python 3.9 (or whatever version you need)
 
   - type: web
     name: controlledmotives-frontend
@@ -32,3 +35,4 @@ services:
         value: "https://controlledmotives-backend.onrender.com"
       - key: NODE_ENV
         value: "production"
+    runtime: nodejs16.x   # Use the desired Node.js runtime version
