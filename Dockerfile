@@ -30,6 +30,7 @@ WORKDIR /app
 # Copy requirements.txt first to leverage Docker caching
 COPY requirements.txt /app/
 
+RUN pip install psycopg2-binary
 
 # Install Python dependencies
 RUN pip install --upgrade pip
