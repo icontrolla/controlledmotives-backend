@@ -1,0 +1,329 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.5;
+    color: #231709;
+    background-color: #fff;
+    padding: 0;
+}
+
+header {
+    background-color:#231709;
+    color: #432616;
+    padding: 1em;
+    text-align: center;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+nav li {
+    margin-right: 20px;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1em;
+}
+
+section {
+    background-color: #fff;
+    padding: 1em;
+    margin-bottom: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+number1 {
+    padding: 1px;
+    margin: 5%;
+    
+}
+#h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    
+}
+
+.gallery-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.art-piece {
+    margin: 20px;
+    width: calc(25% - 40px);
+}
+
+.art-piece img {
+    width: 120%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.art-piece h2 {
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+.art-piece p {
+    font-size: 14px;
+    color: #666;
+}
+
+.moments {
+    background-color: #fafafa;
+    border: 1px solid #e1e1e1;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.1s;
+    width: 25%;
+    display: flex;
+    position:static;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    height: 70vh; /* Full height of the viewport */
+    overflow: hidden; /* Hide overflow when scaling */
+}
+
+.moments:hover {
+    transform: scale(1.05);
+}
+
+.moments video {
+    margin: 20px;
+    width: 75%;
+}
+
+.moments h3 {
+    font-size: 16px;
+    margin: 10px 0 5px;
+}
+
+.moments p {
+    font-size: 12px;
+    color: #999;
+}
+
+
+.like-section {
+    margin-top: 10px;
+}
+
+@font-face {
+    font-family: amsterfont;
+    src: url("{% static 'fonts/amsterfont.ttf' %}");
+}
+
+@font-face {
+    font-family: creepfont;
+    src: url("{% static 'fonts/creepfont.ttf' %}");
+}
+
+body:before {
+    background: url("{% static 'images/signup_bg.mp4' %}") no-repeat center center/cover;
+}
+
+.like-button {
+    background-color: #eb51ba;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 1px 5px;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.like-button:hover {
+    background-color: #dad6d7;
+}
+
+.like-count {
+    margin-left: 10px;
+    font-size: 14px;
+}
+
+.play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 40px; /* Adjust size as needed */
+    color: white; /* Change color as needed */
+    z-index: 1; /* Ensure it appears above video */
+
+}
+.about {
+    background-image: url('path/to/your/image.jpg'); /* Replace with your image path */
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    display: flex;
+    justify-content: right;
+    align-items: right;
+    padding: 12px;
+
+}
+.search-container {
+    margin-top: 3px;
+    display: flex;
+    align-items:normal; /* Align items vertically */
+    border-radius: 9px #231709; /* Rounded corners */
+    padding: 3px; /* Padding inside the container */
+    width: 95%;
+}
+.search-button {
+    background-color: #c7b7a3; /* Button background color */
+    color: rgb(12, 11, 11); /* Button text color */
+    border: none; /* Remove default border */
+    border-radius: 5px; /* Rounded corners */
+    padding: 5px 5px; /* Padding inside the button */
+    padding-left: 6px;
+    cursor: pointer; /* Pointer cursor on hover */
+    font-size: 15px; /* Font size */
+    transition: background-color 0.3s; /* Smooth transition */
+}
+.search-button:hover {
+    background-color: #E8D8c4; /* Darker blue on hover */
+}
+
+.search-input {
+    border-radius: 5px;
+    font-size: 16px;
+    border: 0px;
+    padding-right: 15px;
+    margin-right: 16px;
+    width: 95%;
+}
+
+.logo {
+    padding: 9px;
+    margin-left: 9px;
+    margin-top: 12px;
+    position: absolute; /* Use absolute positioning */
+    top: 0; /* Align to the top */
+    left: 3px; /* Align to the left */
+    width: 50px;
+    height: 40px; /* Adjust height as needed */
+    display: flex; /* Ensure flex properties are applied if needed */
+    align-items: flex-start; /* Optional, for child alignment */
+    justify-content: flex-start; /* Optional, for child alignment */
+
+}
+
+/* Responsive Design */
+.moments .play-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50px;
+    height: 50px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+.resume-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px; /* Adjust size as needed */
+    color: white; /* Change color as needed */
+    z-index: 1; /* Ensure it appears above video */
+}
+
+
+.moments .play-icon:hover {
+    background-color: rgb(32, 29, 29);
+}
+
+.moments .play-icon::before {
+    content: '';
+    border: solid transparent;
+    border-width: 12px 0 12px 20px;
+    border-left-color: #000;
+}
+
+@media (max-width: 768px) {
+    .art-piece {
+        width: calc(50% - 40px);
+    }
+}
+
+@media (max-width: 480px) {
+    .art-piece {
+        width: 100%;
+    }
+}
+.comment-section {
+    border-top: 1px solid #e6e6e6;
+    padding: 10px;
+}
+
+.comments {
+    margin-bottom: 10px;
+}
+
+.comment {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 8px;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.comment-text {
+    background-color: #f0f0f0;
+    padding: 8px;
+    border-radius: 5px;
+    max-width: 20%;
+}
+
+.comment-input {
+    display: flex;
+    align-items: center;
+}
+
+.comment-input input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #e6e6e6;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.comment-input button {
+    background-color: #0095f6;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
