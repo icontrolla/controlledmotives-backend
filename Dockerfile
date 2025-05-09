@@ -38,7 +38,7 @@ RUN pip install -r requirements.txt
 COPY . /app/
 
 # Collect static files (ensure DJANGO_SETTINGS_MODULE is set for this to succeed)
-ENV DJANGO_SETTINGS_MODULE=green_exchange.settings
+ENV DJANGO_SETTINGS_MODULE=controlledmotives.settings
 RUN python manage.py collectstatic --noinput
 
 # Start app with Gunicorn
