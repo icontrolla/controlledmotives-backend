@@ -22,7 +22,7 @@ RUN apt-get update && apt-get install -y \
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
-ENV DJANGO_SETTINGS_MODULE=controlledmotives.settings.production  # Adjust for production settings
+ENV DJANGO_SETTINGS_MODULE=controlledmotives.settings.production
 
 # Set working directory
 WORKDIR /app
