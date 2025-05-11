@@ -1,15 +1,21 @@
 from pathlib import Path
 import os
-from decouple import config
+from decouple import config, Csv
 
+DEBUG = config('DEBUG', default=False, cast=bool)
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+
+
+ALLOWED_HOSTS = config('DJANGO_ALLOWED_HOSTS', default='localhost').split(',')
+
 # Security settings
 SECRET_KEY = config('SECRET_KEY')  # Use environment variable for security
-DEBUG = config('DEBUG', default=True, cast=bool)
 
-ALLOWED_HOSTS = ['*']
+
+
+
 
 # Static and Media files
 STATIC_URL = '/static/'
@@ -25,6 +31,7 @@ CORS_ALLOWED_ORIGINS = [
     'https://controntrolledmotives-frontend-1.onrender.com',  # Render frontend
     'https://controlledmotives.com',  # Production frontend
 ]
+
 
 # Application definition
 INSTALLED_APPS = [
@@ -61,7 +68,7 @@ MIDDLEWARE = [
 ]
 
 # URL configuration
-ROOT_URLCONF = 'your_project.urls'
+ROOT_URLCONF = 'profiles.urls'
 
 # Templates settings
 TEMPLATES = [
@@ -81,7 +88,7 @@ TEMPLATES = [
 ]
 
 # WSGI application
-WSGI_APPLICATION = 'your_project.wsgi.application'
+WSGI_APPLICATION = 'controlledmotives.wsgi.application'
 
 # Database configuration
 DATABASES = {
@@ -89,7 +96,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': config('DB_NAME', default='controlledmotives'),
         'USER': config('DB_USER', default='icontrolla'),
-        'PASSWORD': config('DB_PASSWORD', default='123Controller'),
+        'PASSWORD': config('DB_PASSWORD', default='Tadiwa@2004'),
         'HOST': config('DB_HOST', default='localhost'),
         'PORT': config('DB_PORT', default=5432, cast=int),
     }
@@ -142,6 +149,8 @@ CACHES = {
 # Session engine to use Redis for session storage
 SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 SESSION_CACHE_ALIAS = 'default'
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Internationalization
 LANGUAGE_CODE = 'en-us'

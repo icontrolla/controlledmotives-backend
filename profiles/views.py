@@ -52,7 +52,7 @@ NFT_STORAGE_API_KEY = settings.NFT_STORAGE_API_KEY  # Set this in your settings
 
 
 # Set your Stripe API key
-stripe.api_key = settings.STRIPE_SECRET_KEY  # Make sure to add this in your settings.py
+stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
 def index(request):
