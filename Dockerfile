@@ -22,33 +22,27 @@ RUN apt-get update && apt-get install -y \
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
-# Set environment variable for settings module
 ENV DJANGO_SETTINGS_MODULE=controlledmotives.settings
-
-# Collect static files
-RUN python manage.py collectstatic --noinput
 
 # Set working directory
 WORKDIR /app
 
-# Copy requirements.txt first to leverage Docker caching
+# Copy requirements first for caching
 COPY requirements.txt /app/
-
-RUN pip install psycopg2-binary
 
 # Install Python dependencies
 RUN pip install --upgrade pip
+RUN pip install psycopg2-binary
 RUN pip install -r requirements.txt
 
 # Copy the rest of the application
 COPY . /app/
 
-# Collect static files (ensure DJANGO_SETTINGS_MODULE is set for this to succeed)
+# Collect static files after code is copied
 RUN python manage.py collectstatic --noinput
 
 # Expose the port Gunicorn will run on
 EXPOSE 8000
-
 
 # Start app with Gunicorn
 CMD ["gunicorn", "controlledmotives.wsgi:application", "--bind", "0.0.0.0:8000"]
