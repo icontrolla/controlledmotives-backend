@@ -102,6 +102,7 @@ DATABASES = {
     }
 }
 
+
 # Redis configuration (optional, for caching and sessions)
 REDIS_URL = config('REDIS_URL', default='redis://localhost:6379/0')
 
