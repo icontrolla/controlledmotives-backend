@@ -7,8 +7,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Security settings
 SECRET_KEY = config('SECRET_KEY')  # Use environment variable for security
-DEBUG = config('DEBUG', default=False, cast=bool)
-ALLOWED_HOSTS = ['controntrolledmotives-backend.onrender.com']
+DEBUG = config('DEBUG', default=True, cast=bool)
+
+ALLOWED_HOSTS = ['*']
 
 # Static and Media files
 STATIC_URL = '/static/'
@@ -157,7 +158,6 @@ SECURE_SSL_REDIRECT = True  # Redirect HTTP to HTTPS
 SECURE_HSTS_SECONDS = 3600  # Enable HTTP Strict Transport Security (HSTS)
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
-SECURE_CONTENT_TYPE_NOSNIFF = True
 
 # Logging configuration (optional)
 LOGGING = {
