@@ -116,7 +116,6 @@ REDIS_URL = config('REDIS_URL', default='redis://localhost:6379/0')
 
 
 NFT_STORAGE_API_KEY = config('NFT_STORAGE_API_KEY')
-
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
