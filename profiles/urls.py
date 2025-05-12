@@ -37,7 +37,7 @@ router.register(r'virtual-art', VirtualInteractiveArtViewSet, basename='virtual-
 
 urlpatterns = [
     # Admin and Authentication
-    path('', views.index, name='home'),
+    path('', views.home, name='home'),
     path('admin/', admin.site.urls, name='admin'),
     path('accounts/', include('allauth.urls')),  # Allauth for social/standard auth
     path('api/artist-login/', ArtistLoginView.as_view(), name='artist_login'),
