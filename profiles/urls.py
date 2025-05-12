@@ -9,7 +9,7 @@ from . import views
 from django.urls import re_path
 from .views import ArtworkListAPIView
 from .views import ArtistLoginView, LoginView
-from .views import FrontendAppView
+from .views import FrontendAppView, ArtistSignupView
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -50,7 +50,7 @@ urlpatterns = [
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),  # refresh
 
 
-    path('api/signup/', views.artist_signup, name='signup'),  # Artist signup
+
     path('api/logout/', auth_views.LogoutView.as_view(next_page='/'), name='logout'),  # Logout
 
     # API Endpoints (via DRF router)
@@ -59,7 +59,7 @@ urlpatterns = [
     # Profile-related API Endpoints
     path('api/my-profile/', views.Profile, name='my_profile'),  # Current user profile
     path('api/artist-profile/<int:artist_id>/', views.artist_profile, name='artist_profile'),  # Specific artist profile
-
+    path('api/signup/', ArtistSignupView.as_view(), name='signup'),
     # Post-related API Endpoints
     path('api/create-post/', views.create_post, name='create_post'),  # Create a post
     path('api/delete-post/<int:post_id>/', views.delete_post, name='delete_post'),  # Delete a post

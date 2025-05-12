@@ -380,6 +380,42 @@ class ArtworkViewSet(viewsets.ModelViewSet):
     serializer_class = ArtworkSerializer
     permission_classes = [IsAuthenticated]
 
+# Artist Signup Serializer
+class ArtistSignupSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['username', 'password', 'email', 'first_name', 'last_name']
+
+    def create(self, validated_data):
+        user = User.objects.create_user(
+            username=validated_data['username'],
+            password=validated_data['password'],
+            email=validated_data['email'],
+            first_name=validated_data['first_name'],
+            last_name=validated_data['last_name']
+        )
+        return user
+
+# Artist Signup View
+class ArtistSignupView(APIView):
+    def post(self, request, *args, **kwargs):
+        # Receive input data from the request
+        data = request.data
+        serializer = ArtistSignupSerializer(data=data)
+
+        if serializer.is_valid():
+            # Create new artist/user account
+            serializer.save()
+
+            # You can include a token creation here if you want to return JWT token upon signup
+            return Response({
+                'message': 'Signup successful. You can now log in.',
+                'user': serializer.data
+            }, status=status.HTTP_201_CREATED)
+
+        # Return validation errors if any
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 class LoginView(APIView):
     throttle_classes = [UserRateThrottle]  # Optional: prevent brute force
 
