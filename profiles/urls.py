@@ -6,6 +6,7 @@ from django.contrib.auth import views as auth_views
 from rest_framework.routers import DefaultRouter
 from .views import  ArtworkViewSet, FineArtViewSet, ArtistViewSet, ThriftStoreItemViewSet, PaintingViewSet, DrawingViewSet, NotificationViewSet, SubscriptionPlanViewSet, EthereumTransactionViewSet, PostViewSet, AestheticMomentViewSet, CinematographyGalleryViewSet, PhotographyContentViewSet, ArtGalleryViewSet, ArtCategoryViewSet, ConceptualMixedMediaViewSet, FashionArtViewSet, VirtualInteractiveArtViewSet
 from . import views
+from .views import SignupView
 from django.urls import re_path
 from .views import ArtworkListAPIView
 from .views import ArtistLoginView, LoginView
@@ -59,7 +60,7 @@ urlpatterns = [
     # Profile-related API Endpoints
     path('api/my-profile/', views.Profile, name='my_profile'),  # Current user profile
     path('api/artist-profile/<int:artist_id>/', views.artist_profile, name='artist_profile'),  # Specific artist profile
-    path('api/signup/', ArtistSignupView.as_view(), name='signup'),
+    path('api/signup/', SignupView.as_view(), name='signup'),
     # Post-related API Endpoints
     path('api/create-post/', views.create_post, name='create_post'),  # Create a post
     path('api/delete-post/<int:post_id>/', views.delete_post, name='delete_post'),  # Delete a post

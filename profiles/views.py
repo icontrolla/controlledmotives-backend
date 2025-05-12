@@ -1,5 +1,4 @@
 from rest_framework import serializers, viewsets
-from django.contrib.auth.models import User
 from .models import (
     Artwork, FineArt, Artist, ThriftStoreItem, Painting, DrawingArtwork, AbstractArtwork,
     AestheticMoment, Notification, SubscriptionPlan, UserSubscription, BlockchainWallet,
@@ -7,6 +6,9 @@ from .models import (
     ArtGallery, ArtCategory, Profile, ConceptualMixedMedia, FashionArt, VirtualInteractiveArt,
     ExhibitionPlan, UserSubscription
 )
+
+from .serializers import SignupSerializer
+from rest_framework.permissions import AllowAny
 from rest_framework.throttling import UserRateThrottle
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
@@ -339,6 +341,16 @@ class EthereumTransactionViewSet(viewsets.ModelViewSet):
     queryset = EthereumTransaction.objects.all()
     serializer_class = EthereumTransactionSerializer
     permission_classes = [IsAuthenticated]
+
+class SignupView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        serializer = SignupSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'message': 'User created'}, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['POST'])
