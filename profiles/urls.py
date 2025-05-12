@@ -45,6 +45,9 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('admin/', admin.site.urls, name='admin'),
     path('accounts/', include('allauth.urls')),  # Allauth for social/standard auth
+    path('api/', include('dj_rest_auth.urls')),
+    path('api/signup/', include('dj_rest_auth.registration.urls')),
+    path('accounts/', include('allauth.urls')),
     path('api/artist-login/', ArtistLoginView.as_view(), name='artist_login'),
     path('login/', LoginView.as_view(), name='login'),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),  # login
@@ -60,7 +63,9 @@ urlpatterns = [
     # Profile-related API Endpoints
     path('api/my-profile/', views.Profile, name='my_profile'),  # Current user profile
     path('api/artist-profile/<int:artist_id>/', views.artist_profile, name='artist_profile'),  # Specific artist profile
-    path('api/signup/', SignupView.as_view(), name='signup'),
+
+
+
     # Post-related API Endpoints
     path('api/create-post/', views.create_post, name='create_post'),  # Create a post
     path('api/delete-post/<int:post_id>/', views.delete_post, name='delete_post'),  # Delete a post

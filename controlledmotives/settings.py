@@ -55,6 +55,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'profiles',  # Your custom app
+    'dj_rest_auth',
+    'dj_rest_auth.registration',
 ]
 
 AUTHENTICATION_BACKENDS = (
