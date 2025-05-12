@@ -28,7 +28,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # CORS settings
 CORS_ALLOW_ALL_ORIGINS = False
 CORS_ALLOWED_ORIGINS = [
-    'https://controlledmotives-backend.onrender.com',
+    'http://controlledmotives-backend.onrender.com',
     'https://controntrolledmotives-frontend-1.onrender.com',  # Render frontend
     'https://controlledmotives.com',  # Production frontend
 ]
@@ -164,7 +164,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     ],
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.AllowAny',
     ]
 }
 
