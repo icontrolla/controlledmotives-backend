@@ -10,7 +10,7 @@ db.sqlite3
 *.pyc
 media/
 staticfiles/
-.env
+
 
 # Virtualenv
 venv/
@@ -26,4 +26,4 @@ env/
 .DS_Store
 Thumbs.db
 
-.env
+
