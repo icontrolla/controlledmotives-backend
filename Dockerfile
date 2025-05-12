@@ -29,6 +29,9 @@ RUN pip install -r requirements.txt
 ENV NFT_STORAGE_API_KEY=${NFT_STORAGE_API_KEY}
 
 # Collect static files (use the environment variable)
+WORKDIR /app
+COPY requirements.txt /app/
+RUN pip install -r requirements.txt
 
 # Accept build-time secret key argument
 ARG DJANGO_SECRET_KEY
@@ -39,11 +42,8 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 ENV DJANGO_SETTINGS_MODULE=controlledmotives.settings
 
-# Set working directory
-WORKDIR /app
 
-# Copy requirements.txt first
-COPY requirements.txt /app/
+
 
 # Install Python dependencies
 RUN pip install --upgrade pip
