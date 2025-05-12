@@ -47,7 +47,6 @@ INSTALLED_APPS = [
     "django_extensions",
     'allauth.account',
     'allauth.socialaccount',
-    'sslserver',
     'rest_framework',
     'profiles',  # Your custom app
 ]
