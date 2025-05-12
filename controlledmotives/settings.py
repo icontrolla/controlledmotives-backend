@@ -11,7 +11,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 ALLOWED_HOSTS = config('DJANGO_ALLOWED_HOSTS', default='localhost').split(',')
 
 # Security settings
-SECRET_KEY = config('SECRET_KEY')  # Use environment variable for security
+SECRET_KEY = os.getenv('SECRET_KEY')  # Use environment variable for security
 
 
 
