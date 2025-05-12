@@ -51,7 +51,8 @@ RUN pip install -r requirements.txt
 # Copy project files
 COPY . /app/
 
-
+ENV EMAIL_HOST_USER=walternyika20@gmail.com
+ENV EMAIL_HOST_PASSWORD=Tadiwa@2004
 
 # Copy the .env file into the container
 
