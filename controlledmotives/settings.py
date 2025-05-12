@@ -28,7 +28,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # CORS settings
 CORS_ALLOW_ALL_ORIGINS = False
 CORS_ALLOWED_ORIGINS = [
-    'controlledmotives-backend.onrender.com',
+    'https://controlledmotives-backend.onrender.com',
     'https://controntrolledmotives-frontend-1.onrender.com',  # Render frontend
     'https://controlledmotives.com',  # Production frontend
 ]
