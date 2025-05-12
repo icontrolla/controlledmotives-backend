@@ -1,7 +1,7 @@
-# Use the official Python 3.11 image from Docker Hub
+# Use the official Python 3.11 image
 FROM python:3.11
 
-# Install system dependencies for Pillow and others
+# Install system dependencies for Pillow and psycopg2
 RUN apt-get update && apt-get install -y \
     libjpeg-dev \
     zlib1g-dev \
@@ -14,12 +14,16 @@ RUN apt-get update && apt-get install -y \
     libtiff5-dev \
     libopenjp2-7-dev \
     libpng-dev \
-    gcc \
     libpq-dev \
+    gcc \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Set environment variables
+# Accept build-time secret key argument
+ARG DJANGO_SECRET_KEY
+ENV SECRET_KEY=${DJANGO_SECRET_KEY}
+
+# Environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 ENV DJANGO_SETTINGS_MODULE=controlledmotives.settings
@@ -27,22 +31,21 @@ ENV DJANGO_SETTINGS_MODULE=controlledmotives.settings
 # Set working directory
 WORKDIR /app
 
-# Copy requirements first for caching
+# Copy dependency files first to leverage Docker cache
 COPY requirements.txt /app/
 
 # Install Python dependencies
 RUN pip install --upgrade pip
-RUN pip install psycopg2-binary
 RUN pip install -r requirements.txt
 
-# Copy the rest of the application
+# Copy project files
 COPY . /app/
 
-# Collect static files after code is copied
+# Collect static files
 RUN python manage.py collectstatic --noinput
 
-# Expose the port Gunicorn will run on
+# Expose port for Gunicorn
 EXPOSE 8000
 
-# Start app with Gunicorn
+# Start Gunicorn server
 CMD ["gunicorn", "controlledmotives.wsgi:application", "--bind", "0.0.0.0:8000"]
