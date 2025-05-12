@@ -16,7 +16,7 @@ ALLOWED_HOSTS = [
 
 
 
-
+SECRET_KEY=os.getenv('DJANGO_SECRET_KEY')
 
 
 # Static and Media files
