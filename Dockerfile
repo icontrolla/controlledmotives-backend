@@ -43,7 +43,7 @@ ENV DJANGO_SETTINGS_MODULE=controlledmotives.settings
 WORKDIR /app
 
 # Copy requirements.txt first
-COPY requirements.txt /app/requirements.txt
+COPY requirements.txt /app/
 
 # Install Python dependencies
 RUN pip install --upgrade pip
