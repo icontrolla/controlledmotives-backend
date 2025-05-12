@@ -51,6 +51,8 @@ RUN pip install -r requirements.txt
 # Copy project files
 COPY . /app/
 
+
+
 ENV EMAIL_HOST_USER=walternyika20@gmail.com
 ENV EMAIL_HOST_PASSWORD=Tadiwa@2004
 
@@ -59,6 +61,8 @@ ENV EMAIL_HOST_PASSWORD=Tadiwa@2004
 
 # Collect static files
 RUN python manage.py collectstatic --noinput
+
+
 
 # Expose port for Gunicorn
 EXPOSE 8000
