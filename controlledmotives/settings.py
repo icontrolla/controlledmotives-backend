@@ -118,7 +118,7 @@ REDIS_URL = config('REDIS_URL', default='redis://localhost:6379/0')
 #STRIPE_PUBLISHABLE_KEY = config('STRIPE_PUBLISHABLE_KEY')
 
 # NFT Storage API key
-NFT_STORAGE_API_KEY = config('NFT_STORAGE_API_KEY')
+#NFT_STORAGE_API_KEY = config('NFT_STORAGE_API_KEY')
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
