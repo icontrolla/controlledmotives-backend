@@ -26,6 +26,11 @@ from .serializers import (
     AestheticMomentSerializer, CinematographyGallerySerializer, PhotographyContentSerializer, ArtGallerySerializer, ArtCategorySerializer, ConceptualMixedMediaSerializer,
     FashionArtSerializer, VirtualInteractiveArtSerializer
 )
+from rest_framework.authtoken.models import Token
+from django.contrib.auth import authenticate
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework import status
 from rest_framework.decorators import permission_classes
 from django.db.models import Q
 from .models import User
@@ -391,9 +396,11 @@ class LoginView(APIView):
         user = authenticate(username=username, password=password)
 
         if user is not None:
-            return Response({"message": "Login successful"})
+            token, created = Token.objects.get_or_create(user=user)
+            return Response({"token": token.key, "message": "Login successful"})
         else:
             return Response({"error": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
+
 
 class ArtistLoginView(APIView):
     def post(self, request, *args, **kwargs):
