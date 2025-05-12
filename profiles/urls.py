@@ -10,6 +10,10 @@ from django.urls import re_path
 from .views import ArtworkListAPIView
 from .views import ArtistLoginView, LoginView
 from .views import FrontendAppView
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
 
 app_name = 'profiles'
 
@@ -42,6 +46,8 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),  # Allauth for social/standard auth
     path('api/artist-login/', ArtistLoginView.as_view(), name='artist_login'),
     path('login/', LoginView.as_view(), name='login'),
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),  # login
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),  # refresh
 
 
     path('api/signup/', views.artist_signup, name='signup'),  # Artist signup

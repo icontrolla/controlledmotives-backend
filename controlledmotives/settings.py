@@ -161,14 +161,11 @@ USE_TZ = True
 ADMIN_URL = config('ADMIN_URL', default='admin/')
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',
-    ],
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny',
-        'rest_framework.authentication.TokenAuthentication',
-    ]
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
 }
+
 
 # Logging configuration (optional)
 LOGGING = {

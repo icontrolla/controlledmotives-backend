@@ -7,18 +7,13 @@ from .models import (
     ArtGallery, ArtCategory, Profile, ConceptualMixedMedia, FashionArt, VirtualInteractiveArt,
     ExhibitionPlan, UserSubscription
 )
-
+from rest_framework.throttling import UserRateThrottle
 from django.shortcuts import render
-from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 import requests
 from rest_framework.generics import ListAPIView
-# profiles/views.py
 from django.conf import settings
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
-from django.contrib.auth import authenticate
+
 from rest_framework.decorators import api_view
 from .serializers import (
     ArtworkSerializer, FineArtSerializer, ArtistSerializer, ThriftStoreItemSerializer, PaintingSerializer,
@@ -386,21 +381,36 @@ class ArtworkViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
 class LoginView(APIView):
+    throttle_classes = [UserRateThrottle]  # Optional: prevent brute force
+
     def post(self, request, *args, **kwargs):
-        username = request.data.get('username')
-        password = request.data.get('password')
+        username = request.data.get('username', '').strip().lower()
+        password = request.data.get('password', '')
 
         if not username or not password:
-            return Response({"error": "Username and password are required"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {"error": "Username and password are required"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
         user = authenticate(username=username, password=password)
 
         if user is not None:
             token, created = Token.objects.get_or_create(user=user)
-            return Response({"token": token.key, "message": "Login successful"})
+            return Response({
+                "token": token.key,
+                "message": "Login successful",
+                "user": {
+                    "id": user.id,
+                    "username": user.username,
+                    "email": user.email
+                }
+            })
         else:
-            return Response({"error": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
-
+            return Response(
+                {"error": "Invalid credentials"},
+                status=status.HTTP_401_UNAUTHORIZED
+            )
 
 class ArtistLoginView(APIView):
     def post(self, request, *args, **kwargs):
