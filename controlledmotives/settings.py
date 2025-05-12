@@ -113,9 +113,6 @@ DATABASES = {
 # Redis configuration (optional, for caching and sessions)
 REDIS_URL = config('REDIS_URL', default='redis://localhost:6379/0')
 
-# Stripe API keys
-STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY')
-STRIPE_PUBLISHABLE_KEY = config('STRIPE_PUBLISHABLE_KEY')
 
 
 NFT_STORAGE_API_KEY = config('NFT_STORAGE_API_KEY')
