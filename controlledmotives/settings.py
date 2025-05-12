@@ -2,7 +2,7 @@ from pathlib import Path
 import os
 from decouple import config, Csv
 
-DEBUG = config('DEBUG', default=False, cast=bool)
+DEBUG = True
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -44,14 +44,20 @@ INSTALLED_APPS = [
     'corsheaders',
     'django.contrib.sites',
     'allauth',
+    "django_extensions",
     'allauth.account',
     'allauth.socialaccount',
+    'sslserver',
+    'rest_framework',
     'profiles',  # Your custom app
 ]
 
 AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
 )
+
+SITE_ID = 1  # This should match the ID of the site you created
+
 
 # Middleware settings
 MIDDLEWARE = [
@@ -74,7 +80,7 @@ ROOT_URLCONF = 'profiles.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'frontend')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -121,12 +127,6 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-# Session and CSRF settings
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
-SECURE_BROWSER_XSS_FILTER = True
-SECURE_CONTENT_TYPE_NOSNIFF = True
-X_FRAME_OPTIONS = 'DENY'
 
 # Email settings (optional, for sending emails)
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -139,17 +139,13 @@ EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 # Cache settings (optional, if using Redis for caching)
 CACHES = {
     'default': {
-        'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': REDIS_URL,
-        'OPTIONS': {
-            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
-        }
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
     }
 }
 
-# Session engine to use Redis for session storage
-SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
-SESSION_CACHE_ALIAS = 'default'
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+
+
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
@@ -163,11 +159,14 @@ USE_TZ = True
 # Admin settings
 ADMIN_URL = config('ADMIN_URL', default='admin/')
 
-# Security settings for production
-SECURE_SSL_REDIRECT = True  # Redirect HTTP to HTTPS
-SECURE_HSTS_SECONDS = 3600  # Enable HTTP Strict Transport Security (HSTS)
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-SECURE_HSTS_PRELOAD = True
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ]
+}
 
 # Logging configuration (optional)
 LOGGING = {
