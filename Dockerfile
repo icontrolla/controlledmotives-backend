@@ -30,8 +30,9 @@ ENV NFT_STORAGE_API_KEY=${NFT_STORAGE_API_KEY}
 
 # Collect static files (use the environment variable)
 WORKDIR /app
-COPY requirements.txt /app/
-RUN pip install -r requirements.txt
+COPY requirements.txt .
+RUN python -m pip install -r requirements.txt
+
 
 # Accept build-time secret key argument
 ARG DJANGO_SECRET_KEY
