@@ -10,8 +10,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 ALLOWED_HOSTS = config('DJANGO_ALLOWED_HOSTS', default='localhost').split(',')
 
-# Security settings
-SECRET_KEY = os.getenv('SECRET_KEY')  # Use environment variable for security
 
 
 
@@ -24,6 +22,8 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'frontend/static')]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY', default='sk_test_dummy1234567890')
 
 # CORS settings
 CORS_ALLOW_ALL_ORIGINS = False
