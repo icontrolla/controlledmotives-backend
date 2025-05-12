@@ -41,7 +41,7 @@ urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
     path('accounts/', include('allauth.urls')),  # Allauth for social/standard auth
     path('api/artist-login/', ArtistLoginView.as_view(), name='artist_login'),
-    path('api/login/', LoginView.as_view(), name='login'),
+    path('login/', LoginView.as_view(), name='login'),
 
 
     path('api/artist-signup/', views.artist_signup, name='artist_signup'),  # Artist signup
