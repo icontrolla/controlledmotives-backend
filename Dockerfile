@@ -42,7 +42,7 @@ RUN pip install -r requirements.txt
 COPY . /app/
 
 # Copy the .env file into the container
-COPY .env .env
+
 
 # Collect static files
 RUN python manage.py collectstatic --noinput
