@@ -2,6 +2,7 @@ from pathlib import Path
 import os
 from decouple import config
 
+
 DEBUG = True
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -16,8 +17,8 @@ ALLOWED_HOSTS = [
 
 
 
-SECRET_KEY=os.getenv('DJANGO_SECRET_KEY')
 
+SECRET_KEY = config('SECRET_KEY')
 
 # Static and Media files
 STATIC_URL = '/static/'
