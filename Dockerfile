@@ -42,8 +42,8 @@ ENV DJANGO_SETTINGS_MODULE=controlledmotives.settings
 # Set working directory
 WORKDIR /app
 
-# Copy dependency files first to leverage Docker cache
-COPY requirements.txt /app/
+# Copy requirements.txt first
+COPY requirements.txt /app/requirements.txt
 
 # Install Python dependencies
 RUN pip install --upgrade pip
@@ -51,6 +51,8 @@ RUN pip install -r requirements.txt
 
 # Copy project files
 COPY . /app/
+
+
 
 # Copy the .env file into the container
 
