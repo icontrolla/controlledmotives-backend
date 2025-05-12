@@ -44,7 +44,7 @@ urlpatterns = [
     path('login/', LoginView.as_view(), name='login'),
 
 
-    path('api/artist-signup/', views.artist_signup, name='artist_signup'),  # Artist signup
+    path('api/signup/', views.artist_signup, name='signup'),  # Artist signup
     path('api/logout/', auth_views.LogoutView.as_view(next_page='/'), name='logout'),  # Logout
 
     # API Endpoints (via DRF router)
@@ -83,8 +83,8 @@ urlpatterns = [
     path('webhook/stripe/', views.stripe_webhook, name='stripe_webhook'),  # Stripe webhook
     path('api/create-stripe-product/', views.create_stripe_product, name='create_stripe_product'),  # Create Stripe product
 
-    # Blockchain and Wallet API Endpoints
-    path('api/wallet/', views.wallet_page, name='wallet_page'),  # Wallet overview
+    # Blockchain and Wallet.js API Endpoints
+    path('api/wallet/', views.wallet_page, name='wallet_page'),  # Wallet.js overview
     path('api/create-ethereum-wallet/', views.create_ethereum_wallet, name='create_ethereum_wallet'),  # Create Ethereum wallet
     path('api/save-wallet/', views.save_wallet, name='save_wallet'),  # Save wallet address
     path('api/send-eth/', views.send_eth_view, name='send_eth'),  # Send Ethereum

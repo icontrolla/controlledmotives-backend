@@ -82,12 +82,12 @@ def create_ethereum_wallet(request):
 def save_wallet(request):
     wallet_address = request.data.get('wallet_address')
     if not wallet_address:
-        return Response({'detail': 'Wallet address is required.'}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({'detail': 'Wallet.js address is required.'}, status=status.HTTP_400_BAD_REQUEST)
 
     user = request.user
     user.wallet_address = wallet_address
     user.save()
-    return Response({'detail': 'Wallet address saved successfully.'}, status=status.HTTP_200_OK)
+    return Response({'detail': 'Wallet.js address saved successfully.'}, status=status.HTTP_200_OK)
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
