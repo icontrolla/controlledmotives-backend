@@ -19,6 +19,17 @@ RUN apt-get update && apt-get install -y \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
+# Set build-time argument for NFT_STORAGE_API_KEY
+ARG NFT_STORAGE_API_KEY
+
+# Install dependencies
+RUN pip install -r requirements.txt
+
+# Set environment variable for runtime
+ENV NFT_STORAGE_API_KEY=${NFT_STORAGE_API_KEY}
+
+# Collect static files (use the environment variable)
+
 # Accept build-time secret key argument
 ARG DJANGO_SECRET_KEY
 ENV SECRET_KEY=${DJANGO_SECRET_KEY}
