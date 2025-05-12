@@ -22,8 +22,6 @@ RUN apt-get update && apt-get install -y \
 # Set build-time argument for NFT_STORAGE_API_KEY
 ARG NFT_STORAGE_API_KEY
 
-# Install dependencies
-RUN pip install -r requirements.txt
 
 # Set environment variable for runtime
 ENV NFT_STORAGE_API_KEY=${NFT_STORAGE_API_KEY}
