@@ -50,7 +50,7 @@ python-dateutil==2.9.0.post0
 python-decouple==3.8
 python-dotenv==1.1.0
 pyunormalize==16.0.0
-pywin32==310
+pywin32==228
 qrcode==8.1
 redis==6.0.0
 regex==2024.11.6
