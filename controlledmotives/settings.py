@@ -9,7 +9,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY')
 
 
-ALLOWED_HOSTS = config('DJANGO_ALLOWED_HOSTS', default='localhost').split(',')
+ALLOWED_HOSTS = [
+    "controlledmotives-backend.onrender.com",
+    "localhost",
+    "127.0.0.1",
+]
 
 
 
