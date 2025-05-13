@@ -64,7 +64,8 @@ urlpatterns = [
     path('api/my-profile/', views.Profile, name='my_profile'),  # Current user profile
     path('api/artist-profile/<int:artist_id>/', views.artist_profile, name='artist_profile'),  # Specific artist profile
 
-
+    path('api/auth/', include('dj_rest_auth.urls')),
+    path('api/auth/registration/', include('dj_rest_auth.registration.urls')),
 
     # Post-related API Endpoints
     path('api/create-post/', views.create_post, name='create_post'),  # Create a post
