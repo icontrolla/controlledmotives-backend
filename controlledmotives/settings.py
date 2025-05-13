@@ -151,9 +151,11 @@ REST_AUTH_REGISTER_SERIALIZERS = {
     'REGISTER_SERIALIZER': 'controlledmotives.serializers.UserSerializer'
 }
 
-# Recommended new way:
-ACCOUNT_SIGNUP_FIELDS = ["username*", "email*", "password1*", "password2*"]
 
+ACCOUNT_SIGNUP_FIELDS = {
+    'username': {'required': True},
+    'email': {'required': True}
+}
 
 REST_AUTH = {
     'SIGNUP_FIELDS': {
