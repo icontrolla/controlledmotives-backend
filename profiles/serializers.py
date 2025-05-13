@@ -24,22 +24,10 @@ class SignupSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         return User.objects.create_user(**validated_data)
 
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ['id', 'username', 'email', 'first_name', 'last_name']
-
-class ArtistSignupSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ['username', 'password', 'email', 'first_name', 'last_name']
-
-    def create(self, validated_data):
-        return User.objects.create_user(**validated_data)
 
 # Profile
 class ProfileSerializer(serializers.ModelSerializer):
-    user = UserSerializer(read_only=True)
+    user = User(read_only=True)
     profile_picture = serializers.SerializerMethodField()
 
     class Meta:
