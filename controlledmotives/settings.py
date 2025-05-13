@@ -159,11 +159,8 @@ REST_AUTH_REGISTER_SERIALIZERS = {
 }
 
 # Recommended new way:
-ACCOUNT_SIGNUP_FIELDS = {
-    'username': {'required': True},
-    'email': {'required': True},
-    'password': {'required': True},
-}
+ACCOUNT_SIGNUP_FIELDS = ["username*", "email*", "password1*", "password2*"]
+
 
 REST_AUTH = {
     'SIGNUP_FIELDS': {
