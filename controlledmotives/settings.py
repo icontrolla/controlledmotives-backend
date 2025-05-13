@@ -155,7 +155,7 @@ SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 ACCOUNT_ADAPTER = 'allauth.account.adapter.DefaultAccountAdapter'
 
 REST_AUTH_REGISTER_SERIALIZERS = {
-    'REGISTER_SERIALIZER': 'your_app.serializers.CustomRegisterSerializer'
+    'REGISTER_SERIALIZER': 'controlledmotives.serializers.CustomRegisterSerializer'
 }
 
 # Recommended new way:
@@ -163,6 +163,7 @@ ACCOUNT_SIGNUP_FIELDS = {
     'username': {'required': True},
     'email': {'required': True},
 }
+
 
 
 
