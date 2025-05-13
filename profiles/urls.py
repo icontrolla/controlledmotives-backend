@@ -1,27 +1,27 @@
 from django.conf import settings
 from django.conf.urls.static import static
-from django.urls import path, include
 from django.contrib import admin
-from django.contrib.auth import views as auth_views
+from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import  ArtworkViewSet, FineArtViewSet, ArtistViewSet, ThriftStoreItemViewSet, PaintingViewSet, DrawingViewSet, NotificationViewSet, SubscriptionPlanViewSet, EthereumTransactionViewSet, PostViewSet, AestheticMomentViewSet, CinematographyGalleryViewSet, PhotographyContentViewSet, ArtGalleryViewSet, ArtCategoryViewSet, ConceptualMixedMediaViewSet, FashionArtViewSet, VirtualInteractiveArtViewSet
+from django.contrib.auth import views as auth_views
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+
 from . import views
-from dj_rest_auth.registration.views import RegisterView
-from .views import SignupView
-from django.urls import re_path
-from .views import ArtworkListAPIView
-from .views import ArtistLoginView, LoginView
-from .views import FrontendAppView, ArtistSignupView
-from rest_framework_simplejwt.views import (
-    TokenObtainPairView,
-    TokenRefreshView,
+from .views import (
+    ArtworkViewSet, FineArtViewSet, ArtistViewSet, ThriftStoreItemViewSet,
+    PaintingViewSet, DrawingViewSet, NotificationViewSet, SubscriptionPlanViewSet,
+    EthereumTransactionViewSet, PostViewSet, AestheticMomentViewSet,
+    CinematographyGalleryViewSet, PhotographyContentViewSet, ArtGalleryViewSet,
+    ArtCategoryViewSet, ConceptualMixedMediaViewSet, FashionArtViewSet,
+    VirtualInteractiveArtViewSet, ArtworkListAPIView, ArtistLoginView,
+    LoginView, FrontendAppView, ArtistSignupView
 )
+from dj_rest_auth.registration.views import RegisterView
 
 app_name = 'profiles'
 
-# DRF Router for API endpoints
+# DRF Router for ModelViewSets
 router = DefaultRouter()
-re_path(r'^.*$', FrontendAppView.as_view()),
 router.register(r'artworks', ArtworkViewSet, basename='artwork')
 router.register(r'fine-arts', FineArtViewSet, basename='fine-art')
 router.register(r'artists', ArtistViewSet, basename='artist')
@@ -42,79 +42,69 @@ router.register(r'fashion-art', FashionArtViewSet, basename='fashion-art')
 router.register(r'virtual-art', VirtualInteractiveArtViewSet, basename='virtual-art')
 
 urlpatterns = [
-    # Admin and Authentication
+    # Admin & Static Pages
+    path('admin/', admin.site.urls),
     path('', views.home, name='home'),
-    path('admin/', admin.site.urls, name='admin'),
-    path('accounts/', include('allauth.urls')),  # Allauth for social/standard auth
+    path('api/home/', views.home, name='api_home'),
+    path('api/about/', views.about_page, name='about'),
+
+    # Auth
+    path('accounts/', include('allauth.urls')),
     path('api/', include('dj_rest_auth.urls')),
     path('api/signup/', include('dj_rest_auth.registration.urls')),
-    path('accounts/', include('allauth.urls')),
-    path('api/artist-login/', ArtistLoginView.as_view(), name='artist_login'),
-    path('login/', LoginView.as_view(), name='login'),
-    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),  # login
-    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),  # refresh
-
-
-
-    path('api/logout/', auth_views.LogoutView.as_view(next_page='/'), name='logout'),  # Logout
-
-    # API Endpoints (via DRF router)
-    path('api/', include(router.urls)),
-
-    # Profile-related API Endpoints
-    path('api/my-profile/', views.Profile, name='my_profile'),  # Current user profile
-    path('api/artist-profile/<int:artist_id>/', views.artist_profile, name='artist_profile'),  # Specific artist profile
-
-    path('api/auth/', include('dj_rest_auth.urls')),
-    path('api/auth/registration/', include('dj_rest_auth.registration.urls')),
     path('auth/registration/', RegisterView.as_view(), name='rest_register'),
-    # Post-related API Endpoints
-    path('api/create-post/', views.create_post, name='create_post'),  # Create a post
-    path('api/delete-post/<int:post_id>/', views.delete_post, name='delete_post'),  # Delete a post
+    path('login/', LoginView.as_view(), name='login'),
+    path('api/artist-login/', ArtistLoginView.as_view(), name='artist_login'),
+    path('api/logout/', auth_views.LogoutView.as_view(next_page='/'), name='logout'),
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+
+    # Profiles & Artist Info
+    path('api/my-profile/', views.Profile, name='my_profile'),
+    path('api/artist-profile/<int:artist_id>/', views.artist_profile, name='artist_profile'),
+    path('api/artist-dashboard/', views.artist_dashboard, name='artist_dashboard'),
+
+    # Posts
+    path('api/create-post/', views.create_post, name='create_post'),
+    path('api/delete-post/<int:post_id>/', views.delete_post, name='delete_post'),
     path('api/flower-post/<int:post_id>/', views.flower_post, name='flower_post'),
 
-
-    # Artwork and Store API Endpoints
+    # Artwork
     path('artworks/', ArtworkListAPIView.as_view(), name='artwork-list'),
-    path('api/artwork/<int:artwork_id>/buy/', views.buy_artwork, name='buy_artwork'),  # Buy artwork
-    path('api/artwork/<int:artwork_id>/toggle-flower/', views.flower_post, name='toggle_flower'),  # Toggle flower
-    path('api/process-payment/<int:artwork_id>/<int:price>/', views.process_payment, name='process_payment'),  # Process payment
+    path('api/artwork/<int:artwork_id>/buy/', views.buy_artwork, name='buy_artwork'),
+    path('api/artwork/<int:artwork_id>/toggle-flower/', views.flower_post, name='toggle_flower'),
 
-    # Search API Endpoint
-    path('api/search/', views.search, name='search'),  # Search functionality
+    # Payment & Subscriptions
+    path('api/process-payment/<int:artwork_id>/<int:price>/', views.process_payment, name='process_payment'),
+    path('api/subscribe/<int:plan_id>/', views.subscribe, name='subscribe'),
+    path('api/checkout/subscription/<int:plan_id>/', views.create_checkout_session, name='checkout_subscription'),
+    path('api/subscribe/success/', views.subscribe_success, name='subscribe_success'),
+    path('api/cancel-subscription/', views.cancel_subscription, name='cancel_subscription'),
+    path('api/create-stripe-product/', views.create_stripe_product, name='create_stripe_product'),
+    path('webhook/stripe/', views.stripe_webhook, name='stripe_webhook'),
 
-    # Artist Dashboard API Endpoint
-    path('api/artist-dashboard/', views.artist_dashboard, name='artist_dashboard'),  # Artist dashboard data
+    # Ethereum/Blockchain
+    path('api/wallet/', views.wallet_page, name='wallet_page'),
+    path('api/create-ethereum-wallet/', views.create_ethereum_wallet, name='create_ethereum_wallet'),
+    path('api/save-wallet/', views.save_wallet, name='save_wallet'),
+    path('api/send-eth/', views.send_eth_view, name='send_eth'),
 
-    # Feedback API Endpoint
-    path('api/submit-feedback/', views.submit_feedback, name='submit_feedback'),  # Submit feedback
-
-    # Subscription and Payment API Endpoints
-    path('api/subscribe/<int:plan_id>/', views.subscribe, name='subscribe'),  # Subscribe to a plan
-    path('api/checkout/subscription/<int:plan_id>/', views.create_checkout_session, name='checkout_subscription'),  # Subscription checkout
-    path('api/subscribe/success/', views.subscribe_success, name='subscribe_success'),  # Subscription success
-    path('api/cancel-subscription/', views.cancel_subscription, name='cancel_subscription'),  # Cancel subscription
-    path('webhook/stripe/', views.stripe_webhook, name='stripe_webhook'),  # Stripe webhook
-    path('api/create-stripe-product/', views.create_stripe_product, name='create_stripe_product'),  # Create Stripe product
-
-    # Blockchain and Wallet.js API Endpoints
-    path('api/wallet/', views.wallet_page, name='wallet_page'),  # Wallet.js overview
-    path('api/create-ethereum-wallet/', views.create_ethereum_wallet, name='create_ethereum_wallet'),  # Create Ethereum wallet
-    path('api/save-wallet/', views.save_wallet, name='save_wallet'),  # Save wallet address
-    path('api/send-eth/', views.send_eth_view, name='send_eth'),  # Send Ethereum
-
-    # Home and Static Pages
-    path('api/home/', views.home, name='home'),  # Home page data
-    path('api/about/', views.about_page, name='about'),  # About page data
-
-    # Notification Management
+    # Notifications
     path('api/notifications/mark-all-read/', views.mark_all_notifications_read, name='mark_all_notifications_read'),
     path('api/notifications/delete-all/', views.delete_all_notifications, name='delete_all_notifications'),
     path('api/notifications/delete/<int:notification_id>/', views.delete_notification, name='delete_notification'),
+
+    # Search & Feedback
+    path('api/search/', views.search, name='search'),
+    path('api/submit-feedback/', views.submit_feedback, name='submit_feedback'),
+
+    # DRF Router Endpoints
+    path('api/', include(router.urls)),
+
+    # Catch-All for React Frontend
+    path('', FrontendAppView.as_view(), name='frontend'),
 ]
 
-# Serve media files during development
+# Media file serving in development
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-
