@@ -6,6 +6,7 @@ from django.contrib.auth import views as auth_views
 from rest_framework.routers import DefaultRouter
 from .views import  ArtworkViewSet, FineArtViewSet, ArtistViewSet, ThriftStoreItemViewSet, PaintingViewSet, DrawingViewSet, NotificationViewSet, SubscriptionPlanViewSet, EthereumTransactionViewSet, PostViewSet, AestheticMomentViewSet, CinematographyGalleryViewSet, PhotographyContentViewSet, ArtGalleryViewSet, ArtCategoryViewSet, ConceptualMixedMediaViewSet, FashionArtViewSet, VirtualInteractiveArtViewSet
 from . import views
+from dj_rest_auth.registration.views import RegisterView
 from .views import SignupView
 from django.urls import re_path
 from .views import ArtworkListAPIView
@@ -66,7 +67,7 @@ urlpatterns = [
 
     path('api/auth/', include('dj_rest_auth.urls')),
     path('api/auth/registration/', include('dj_rest_auth.registration.urls')),
-
+    path('auth/registration/', RegisterView.as_view(), name='rest_register'),
     # Post-related API Endpoints
     path('api/create-post/', views.create_post, name='create_post'),  # Create a post
     path('api/delete-post/<int:post_id>/', views.delete_post, name='delete_post'),  # Delete a post

@@ -162,8 +162,8 @@ REST_AUTH_REGISTER_SERIALIZERS = {
 ACCOUNT_SIGNUP_FIELDS = {
     'username': {'required': True},
     'email': {'required': True},
+    'password': {'required': True},
 }
-
 
 
 
