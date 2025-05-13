@@ -108,9 +108,7 @@ WSGI_APPLICATION = 'controlledmotives.wsgi.application'
 
 # Database configuration
 DATABASES = {
-    'default': dj_database_url.config(
-        default=os.environ.get('DATABASE_URL')
-    )
+    'default': dj_database_url.config(default='postgresql://icontrolla:ImdOPLXHEEJufurvE7TJpuzyjATIBp3D@dpg-d0hmaa3uibrs739stkqg-a/controlledmotives')
 }
 
 
