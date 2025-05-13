@@ -151,6 +151,14 @@ CACHES = {
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 
+REST_AUTH_REGISTER_SERIALIZERS = {
+    'REGISTER_SERIALIZER': 'controlledmotives.serializers.CustomRegisterSerializer'
+}
+
+ACCOUNT_SIGNUP_FIELDS = ['username', 'email', 'password1', 'password2']
+
+ACCOUNT_USERNAME_REQUIRED = True
+ACCOUNT_EMAIL_REQUIRED = True
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
