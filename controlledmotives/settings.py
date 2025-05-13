@@ -2,6 +2,19 @@ from pathlib import Path
 import os
 from decouple import config
 import dj_database_url
+import warnings
+
+
+warnings.filterwarnings(
+    "ignore",
+    message=".*USERNAME_REQUIRED is deprecated.*",
+    module="dj_rest_auth.registration.serializers"
+)
+warnings.filterwarnings(
+    "ignore",
+    message=".*EMAIL_REQUIRED is deprecated.*",
+    module="dj_rest_auth.registration.serializers"
+)
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -152,6 +165,13 @@ REST_AUTH_REGISTER_SERIALIZERS = {
 }
 
 
+REST_AUTH = {
+    "SIGNUP_FIELDS": {
+        "username": {"required": True},
+        "email": {"required": True},
+        # add more fields if needed
+    }
+}
 
 
 
