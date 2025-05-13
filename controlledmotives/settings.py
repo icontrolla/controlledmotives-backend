@@ -3,11 +3,13 @@ import os
 from decouple import config
 
 
-DEBUG = False
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = config('SECRET_KEY')
+DEBUG = config('DEBUG', default=False, cast=bool)
+NFT_STORAGE_API_KEY = config('NFT_STORAGE_API_KEY')
 
 ALLOWED_HOSTS = [
     "controlledmotives-backend.onrender.com",
@@ -122,7 +124,7 @@ REDIS_URL = config('REDIS_URL', default='redis://localhost:6379/0')
 
 
 
-NFT_STORAGE_API_KEY = config('NFT_STORAGE_API_KEY')
+
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
