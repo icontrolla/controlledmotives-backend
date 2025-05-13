@@ -151,14 +151,19 @@ CACHES = {
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 
+
+ACCOUNT_ADAPTER = 'allauth.account.adapter.DefaultAccountAdapter'
+
 REST_AUTH_REGISTER_SERIALIZERS = {
-    'REGISTER_SERIALIZER': 'controlledmotives.serializers.CustomRegisterSerializer'
+    'REGISTER_SERIALIZER': 'your_app.serializers.CustomRegisterSerializer'
 }
 
-ACCOUNT_SIGNUP_FIELDS = ['username', 'email', 'password1', 'password2']
+# Recommended new way:
+ACCOUNT_SIGNUP_FIELDS = {
+    'username': {'required': True},
+    'email': {'required': True},
+}
 
-ACCOUNT_USERNAME_REQUIRED = True
-ACCOUNT_EMAIL_REQUIRED = True
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
