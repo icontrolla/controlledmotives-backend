@@ -604,6 +604,8 @@ def buy_artwork(request, artwork_id):
         return Response({'detail': 'Artwork not found.'}, status=status.HTTP_404_NOT_FOUND)
 
 
+
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def process_payment(request, artwork_id, price):
