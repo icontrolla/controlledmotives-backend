@@ -155,15 +155,6 @@ REST_AUTH_REGISTER_SERIALIZERS = {
 
 
 
-REST_AUTH = {
-    'REGISTER_SERIALIZER': 'profiles.serializers.UserSerializer',
-    'SIGNUP_FIELDS': {
-        'username': {'required': True},
-        'email': {'required': True},
-    }
-}
-
-
 
 
 
