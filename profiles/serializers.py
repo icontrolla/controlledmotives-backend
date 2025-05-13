@@ -1,6 +1,6 @@
-from rest_framework import serializers
 from django.contrib.auth.models import User
-from django.conf import settings
+from rest_framework import serializers
+
 from .models import (
     Artwork, FineArt, Artist, ThriftStoreItem, Painting, DrawingArtwork, AbstractArtwork,
     AestheticMoment, Notification, SubscriptionPlan, UserSubscription, BlockchainWallet,
@@ -17,6 +17,12 @@ class SignupSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         return User.objects.create_user(**validated_data)
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User  # or your custom User model
+        fields = ['id', 'username', 'email', 'first_name', 'last_name']
+
 
 # Artist Signup Serializer
 class ArtistSignupSerializer(serializers.ModelSerializer):
