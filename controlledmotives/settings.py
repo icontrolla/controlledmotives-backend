@@ -157,6 +157,19 @@ ACCOUNT_SIGNUP_FIELDS = {
     'email': {'required': True}
 }
 
+# settings.py
+
+SIGNUP_FIELDS = {
+    'username': {
+        'required': True,  # Set to False if username is optional
+    },
+    'email': {
+        'required': True,  # Set to False if email is optional
+    },
+    # Other fields can be added here as needed
+}
+
+
 REST_AUTH = {
     'SIGNUP_FIELDS': {
         'username': {'required': True},
