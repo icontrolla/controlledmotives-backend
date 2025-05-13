@@ -342,15 +342,6 @@ class EthereumTransactionViewSet(viewsets.ModelViewSet):
     serializer_class = EthereumTransactionSerializer
     permission_classes = [IsAuthenticated]
 
-class SignupView(APIView):
-    permission_classes = [AllowAny]
-
-    def post(self, request):
-        serializer = SignupSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response({'message': 'User created'}, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['POST'])

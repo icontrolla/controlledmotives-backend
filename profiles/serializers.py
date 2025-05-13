@@ -14,20 +14,33 @@ def build_absolute_uri(context, file):
         return context['request'].build_absolute_uri(file.url)
     return None
 
-# User
 class SignupSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True)
+
     class Meta:
         model = User
-        fields = ('username', 'email', 'password')
-        extra_kwargs = {'password': {'write_only': True}}
+        fields = ['username', 'email', 'password']
+        extra_kwargs = {
+            'email': {'required': True},
+        }
 
     def create(self, validated_data):
-        return User.objects.create_user(**validated_data)
+        user = User.objects.create_user(
+            username=validated_data['username'],
+            email=validated_data['email'],
+            password=validated_data['password']
+        )
+        return user
 
+# Basic user serializer for nested representation
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'email', 'first_name', 'last_name']
 
-# Profile
+# Profile serializer linking to the above UserSerializer
 class ProfileSerializer(serializers.ModelSerializer):
-    user = User(read_only=True)
+    user = UserSerializer(read_only=True)
     profile_picture = serializers.SerializerMethodField()
 
     class Meta:
@@ -35,7 +48,10 @@ class ProfileSerializer(serializers.ModelSerializer):
         fields = ['id', 'user', 'bio', 'profile_picture', 'location', 'website']
 
     def get_profile_picture(self, obj):
-        return build_absolute_uri(self.context, obj.profile_picture)
+        request = self.context.get('request')
+        if obj.profile_picture and hasattr(obj.profile_picture, 'url'):
+            return request.build_absolute_uri(obj.profile_picture.url)
+        return None
 
 # Base image serializer mixin
 class ImageFieldSerializerMixin(serializers.ModelSerializer):
