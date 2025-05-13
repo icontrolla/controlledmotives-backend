@@ -1,7 +1,7 @@
 from pathlib import Path
 import os
 from decouple import config
-
+import dj_database_url
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -108,14 +108,9 @@ WSGI_APPLICATION = 'controlledmotives.wsgi.application'
 
 # Database configuration
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('DB_NAME', default='controlledmotives'),
-        'USER': config('DB_USER', default='icontrolla'),
-        'PASSWORD': config('DB_PASSWORD', default='Tadiwa@2004'),
-        'HOST': config('DB_HOST', default='localhost'),
-        'PORT': config('DB_PORT', default=5432, cast=int),
-    }
+    'default': dj_database_url.config(
+        default=os.environ.get('DATABASE_URL')
+    )
 }
 
 
