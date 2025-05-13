@@ -14,7 +14,7 @@ from .views import (
     CinematographyGalleryViewSet, PhotographyContentViewSet, ArtGalleryViewSet,
     ArtCategoryViewSet, ConceptualMixedMediaViewSet, FashionArtViewSet,
     VirtualInteractiveArtViewSet, ArtworkListAPIView, ArtistLoginView,
-    LoginView, FrontendAppView, ArtistSignupView
+    LoginView
 )
 from dj_rest_auth.registration.views import RegisterView
 
@@ -44,7 +44,6 @@ router.register(r'virtual-art', VirtualInteractiveArtViewSet, basename='virtual-
 urlpatterns = [
     # Admin & Static Pages
     path('admin/', admin.site.urls),
-    path('', views.home, name='home'),
     path('api/home/', views.home, name='api_home'),
     path('api/about/', views.about_page, name='about'),
 
@@ -101,8 +100,7 @@ urlpatterns = [
     # DRF Router Endpoints
     path('api/', include(router.urls)),
 
-    # Catch-All for React Frontend
-    path('', FrontendAppView.as_view(), name='frontend'),
+
 ]
 
 # Media file serving in development
