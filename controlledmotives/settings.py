@@ -152,12 +152,8 @@ REST_AUTH_REGISTER_SERIALIZERS = {
 }
 
 
-ACCOUNT_SIGNUP_FIELDS = {
-    'username': {'required': True},
-    'email': {'required': True}
-}
 
-# settings.py
+
 
 SIGNUP_FIELDS = {
     'username': {
@@ -170,12 +166,7 @@ SIGNUP_FIELDS = {
 }
 
 
-REST_AUTH = {
-    'SIGNUP_FIELDS': {
-        'username': {'required': True},
-        'email': {'required': True},
-    }
-}
+
 
 
 
