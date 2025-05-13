@@ -791,7 +791,7 @@ def home(request):
     return Response({
         "message": "Welcome to Controlled Motives Home",
         "status": "success"
-    }, status=status.HTTP_200_OK)
+    })
 
 @api_view(['GET'])
 def about_page(request):
