@@ -122,8 +122,11 @@ WSGI_APPLICATION = 'controlledmotives.wsgi.application'
 
 # Database configuration
 DATABASES = {
-    'default': dj_database_url.config(default='postgresql://icontrolla:ImdOPLXHEEJufurvE7TJpuzyjATIBp3D@dpg-d0hmaa3uibrs739stkqg-a/controlledmotives')
+    'default': dj_database_url.config(
+        default='postgresql://icontrolla:ImdOPLXHEEJufurvE7TJpuzyjATIBp3D@dpg-d0hmaa3uibrs739stkqg-a.render.com:5432/controlledmotives'
+    )
 }
+
 
 
 # Redis configuration (optional, for caching and sessions)
