@@ -45,7 +45,7 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'frontend/static')]
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-#STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY', default='sk_test_dummy1234567890')
+STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY', default='sk_test_dummy1234567890')
 
 # CORS settings
 CORS_ALLOW_ALL_ORIGINS = False
