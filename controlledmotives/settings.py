@@ -17,6 +17,7 @@ warnings.filterwarnings(
 )
 
 
+DJANGO_ENV = os.getenv("DJANGO_ENV", "development")
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -44,7 +45,7 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'frontend/static')]
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY', default='sk_test_dummy1234567890')
+#STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY', default='sk_test_dummy1234567890')
 
 # CORS settings
 CORS_ALLOW_ALL_ORIGINS = False
@@ -120,13 +121,20 @@ TEMPLATES = [
 # WSGI application
 WSGI_APPLICATION = 'controlledmotives.wsgi.application'
 
-# Database configuration
-DATABASES = {
-    'default': dj_database_url.config(
-        default='postgresql://icontrolla:ImdOPLXHEEJufurvE7TJpuzyjATIBp3D@dpg-d0hmaa3uibrs739stkqg-a.render.com:5432/controlledmotives'
-    )
-}
-
+if DJANGO_ENV == "production":
+    DATABASES = {
+        'default': dj_database_url.config(
+            default='postgresql://icontrolla:ImdOPLXHEEJufurvE7TJpuzyjATIBp3D@dpg-d0hmaa3uibrs739stkqg-a.render.com:5432/controlledmotives'
+        )
+    }
+else:
+    # SQLite for development
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 
 # Redis configuration (optional, for caching and sessions)
@@ -149,8 +157,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = config('EMAIL_HOST', default='smtp.gmail.com')
 EMAIL_PORT = config('EMAIL_PORT', default=587, cast=int)
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'walternyika20@gmail.com'
-EMAIL_HOST_PASSWORD = 'Controll3r@123'
+#EMAIL_HOST_USER = 'walternyika20@gmail.com'
+#EMAIL_HOST_PASSWORD = 'Controll3r@123'
 
 # Cache settings (optional, if using Redis for caching)
 CACHES = {

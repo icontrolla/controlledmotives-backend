@@ -314,7 +314,7 @@ class VirtualInteractiveArt(models.Model):
         ('other', 'Other'),
     ]
 
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='virtualart')
+
     title = models.CharField(max_length=255)
     description = models.TextField()
     image = models.ImageField(upload_to='virtualart/')
@@ -687,77 +687,6 @@ class FashionArt(models.Model):
         verbose_name_plural = "Fashion Arts"
 
 
-class VirtualInteractiveArt(models.Model):
-    ART_TYPE_CHOICES = [
-        ('vr_art', 'Virtual Reality (VR) Art'),
-        ('ar_art', 'Augmented Reality (AR) Art'),
-        ('projection_mapping', 'Projection Mapping & Light Installations'),
-        ('ai_driven', 'AI-Driven Sound & Visuals'),
-    ]
-
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='virtualinteractivearts')
-    title = models.CharField(max_length=255)
-    description = models.TextField()
-    image = models.ImageField(upload_to='virtualinteractivearts/')
-    artist = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name="virtualinteractiveart"
-    )
-    price = models.DecimalField(max_digits=10, decimal_places=2)
-    art_type = models.CharField(max_length=50, choices=ART_TYPE_CHOICES, default='vr_art')
-    is_for_sale = models.BooleanField(default=False)
-    flowers = models.PositiveIntegerField(default=0)
-    is_featured = models.BooleanField(default=False)
-    is_trending = models.BooleanField(default=False)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    # NFT Fields
-    is_nft = models.BooleanField(default=False)
-    nft_contract_address = models.CharField(max_length=255, blank=True, null=True)
-    nft_token_id = models.CharField(max_length=255, blank=True, null=True)
-    blockchain = models.CharField(
-        max_length=100,
-        choices=[('ethereum', 'Ethereum'), ('polygon', 'Polygon'), ('solana', 'Solana'), ('other', 'Other')],
-        blank=True,
-        null=True,
-    )
-    mint_date = models.DateTimeField(blank=True, null=True)
-    nft_url = models.URLField(blank=True, null=True)
-    nft_metadata = models.JSONField(blank=True, null=True, help_text="Metadata of the NFT")
-    copyright_hash = models.CharField(max_length=255, blank=True, null=True)
-
-    def save(self, *args, **kwargs):
-        if self.mint_date:
-            if isinstance(self.mint_date, str):
-                self.mint_date = timezone.make_aware(timezone.datetime.fromisoformat(self.mint_date))
-            elif timezone.is_naive(self.mint_date):
-                self.mint_date = timezone.make_aware(self.mint_date)
-
-        if self.is_nft and self.nft_contract_address and self.nft_token_id:
-            self.nft_url = f"https://opensea.io/assets/{self.nft_contract_address}/{self.nft_token_id}"
-            self.nft_metadata = self.fetch_nft_metadata()
-
-        super().save(*args, **kwargs)
-
-    def fetch_nft_metadata(self):
-        if self.nft_contract_address and self.nft_token_id:
-            api_url = f"https://api.opensea.io/api/v1/asset/{self.nft_contract_address}/{self.nft_token_id}/"
-            try:
-                response = requests.get(api_url, timeout=10)
-                if response.status_code == 200:
-                    return response.json()
-            except requests.RequestException as e:
-                logger.error(f"Error fetching NFT metadata: {e}")
-        return None
-
-    def __str__(self):
-        return self.title
-
-    class Meta:
-        verbose_name = "Virtual & Interactive Art"
-        verbose_name_plural = "Virtual & Interactive Arts"
 
 
 class DrawingArt(models.Model):
@@ -882,15 +811,6 @@ class Artwork(models.Model):
         return self.title
 
 
-
-class Feedback(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    content = models.TextField()
-    rating = models.PositiveIntegerField(null=True, blank=True)  # Optional rating field
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f"Feedback from {self.user.username}"
 
 
 class SecureFile(models.Model):
