@@ -30,6 +30,7 @@ ALLOWED_HOSTS = [
 
     "https://controntrolledmotives-frontend-1.onrender.com",
     "https://controlledmotives-backend.onrender.com",
+    "controlledmotives-backend.onrender.com"
 
     "localhost",
     "127.0.0.1",
