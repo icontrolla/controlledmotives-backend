@@ -36,6 +36,15 @@ ALLOWED_HOSTS = [
 
 LOGIN_REDIRECT_URL = '/https://controntrolledmotives-frontend-1.onrender.com'
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://controlledmotives-frontend-1.onrender.com",
+]
+
+SESSION_COOKIE_SAMESITE = 'None'
+SESSION_COOKIE_SECURE = True
+
+CSRF_COOKIE_SAMESITE = 'None'
+CSRF_COOKIE_SECURE = True
 
 
 
