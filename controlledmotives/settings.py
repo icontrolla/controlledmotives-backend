@@ -38,7 +38,11 @@ LOGIN_REDIRECT_URL = '/https://controntrolledmotives-frontend-1.onrender.com'
 
 CSRF_TRUSTED_ORIGINS = [
     "https://controntrolledmotives-frontend-1.onrender.com",
+<<<<<<< HEAD
     "controlledmotives-backend.onrender.com/admin/",
+=======
+    "controlledmotives-backend.onrender.com",
+>>>>>>> ce57d7f0a3750b4f5f324152f806446884e32838
 ]
 
 SESSION_COOKIE_SAMESITE = 'None'
@@ -171,6 +175,10 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = "optional"  # or "mandatory" if you want email verification
 SOCIALACCOUNT_QUERY_EMAIL = True
 SOCIALACCOUNT_EMAIL_REQUIRED = True
+<<<<<<< HEAD
+=======
+#SOCIALACCOUNT_ADAPTER = 'profiles.adapter.MySocialAccountAdapter'
+>>>>>>> ce57d7f0a3750b4f5f324152f806446884e32838
 
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
