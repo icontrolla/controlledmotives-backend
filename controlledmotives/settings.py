@@ -70,6 +70,7 @@ INSTALLED_APPS = [
     "django_extensions",
     'allauth.account',
     'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
     'rest_framework',
     'rest_framework.authtoken',
     'profiles',  # Your custom app
