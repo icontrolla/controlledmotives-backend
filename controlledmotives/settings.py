@@ -28,7 +28,7 @@ NFT_STORAGE_API_KEY = config('NFT_STORAGE_API_KEY')
 
 ALLOWED_HOSTS = [
     "https://controntrolledmotives-frontend-1.onrender.com/",
-    "controlledmotives-backend.onrender.com/admin/",
+    "controlledmotives-backend.onrender.com",
     "localhost",
     "127.0.0.1",
 ]
