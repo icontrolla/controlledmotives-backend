@@ -28,7 +28,7 @@ NFT_STORAGE_API_KEY = config('NFT_STORAGE_API_KEY')
 
 ALLOWED_HOSTS = [
     "https://controntrolledmotives-frontend-1.onrender.com/",
-    "controlledmotives-backend.onrender.com",
+    "controlledmotives-backend.onrender.com/admin/",
     "localhost",
     "127.0.0.1",
 ]
@@ -38,6 +38,7 @@ LOGIN_REDIRECT_URL = '/https://controntrolledmotives-frontend-1.onrender.com'
 
 CSRF_TRUSTED_ORIGINS = [
     "https://controntrolledmotives-frontend-1.onrender.com",
+    "controlledmotives-backend.onrender.com/admin/",
 ]
 
 SESSION_COOKIE_SAMESITE = 'None'
@@ -170,7 +171,6 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = "optional"  # or "mandatory" if you want email verification
 SOCIALACCOUNT_QUERY_EMAIL = True
 SOCIALACCOUNT_EMAIL_REQUIRED = True
-SOCIALACCOUNT_ADAPTER = 'profiles.adapter.MySocialAccountAdapter'
 
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
