@@ -33,7 +33,7 @@ ALLOWED_HOSTS = [
 ]
 
 
-LOGIN_REDIRECT_URL = '/https://controntrolledmotives-frontend-1.onrender.com//'
+LOGIN_REDIRECT_URL = '/https://controntrolledmotives-frontend-1.onrender.com'
 
 
 
@@ -155,6 +155,24 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
+
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = "optional"  # or "mandatory" if you want email verification
+SOCIALACCOUNT_QUERY_EMAIL = True
+SOCIALACCOUNT_EMAIL_REQUIRED = True
+SOCIALACCOUNT_ADAPTER = 'your_project.adapter.MySocialAccountAdapter'
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
 
 
 # Email settings (optional, for sending emails)
