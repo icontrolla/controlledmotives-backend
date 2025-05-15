@@ -33,6 +33,7 @@ ALLOWED_HOSTS = [
 ]
 
 
+LOGIN_REDIRECT_URL = '/https://controntrolledmotives-frontend-1.onrender.com//'
 
 
 
