@@ -161,7 +161,7 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = "optional"  # or "mandatory" if you want email verification
 SOCIALACCOUNT_QUERY_EMAIL = True
 SOCIALACCOUNT_EMAIL_REQUIRED = True
-SOCIALACCOUNT_ADAPTER = 'controlledmotives.adapter.MySocialAccountAdapter'
+SOCIALACCOUNT_ADAPTER = 'profiles.adapter.MySocialAccountAdapter'
 
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
