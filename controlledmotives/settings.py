@@ -38,6 +38,7 @@ LOGIN_REDIRECT_URL = '/https://controntrolledmotives-frontend-1.onrender.com'
 
 CSRF_TRUSTED_ORIGINS = [
     "https://controntrolledmotives-frontend-1.onrender.com",
+    "controlledmotives-backend.onrender.com",
 ]
 
 SESSION_COOKIE_SAMESITE = 'None'
