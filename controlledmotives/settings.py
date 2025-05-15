@@ -22,9 +22,9 @@ DJANGO_ENV = os.getenv("DJANGO_ENV", "development")
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-#SECRET_KEY = config('SECRET_KEY')
-#DEBUG = config('DEBUG', default=False, cast=bool)
-#FT_STORAGE_API_KEY = config('NFT_STORAGE_API_KEY')
+SECRET_KEY = config('SECRET_KEY')
+DEBUG = config('DEBUG', default=False, cast=bool)
+NFT_STORAGE_API_KEY = config('NFT_STORAGE_API_KEY')
 
 ALLOWED_HOSTS = [
     "https://controntrolledmotives-frontend-1.onrender.com",
