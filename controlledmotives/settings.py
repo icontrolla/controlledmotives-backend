@@ -66,7 +66,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY', default='sk_test_dummy1234567890')
 
 # CORS settings
-CORS_ALLOW_ALL_ORIGINS = False
+
 CORS_ALLOWED_ORIGINS = [
     'http://controlledmotives-backend.onrender.com',
     'https://controntrolledmotives-frontend-1.onrender.com',  # Render frontend
@@ -131,6 +131,8 @@ CSP_IMG_SRC = (
     'data:',
     'https://controlledmotives-backend.onrender.com',
 )
+
+CORS_ALLOW_ALL_ORIGINS = True
 
 # Templates settings
 TEMPLATES = [
