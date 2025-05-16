@@ -27,17 +27,15 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 NFT_STORAGE_API_KEY = config('NFT_STORAGE_API_KEY')
 
 ALLOWED_HOSTS = [
-
     "https://controntrolledmotives-frontend-1.onrender.com",
     "https://controlledmotives-backend.onrender.com",
-    "controlledmotives-backend.onrender.com"
-
+    "controlledmotives-backend.onrender.com",
     "localhost",
     "127.0.0.1",
 ]
 
 
-LOGIN_REDIRECT_URL = '/https://controntrolledmotives-frontend-1.onrender.com'
+LOGIN_REDIRECT_URL = 'https://controntrolledmotives-frontend-1.onrender.com/home'
 
 CSRF_TRUSTED_ORIGINS = [
     "https://controntrolledmotives-frontend-1.onrender.com",
