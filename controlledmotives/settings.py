@@ -94,6 +94,7 @@ INSTALLED_APPS = [
     'profiles',  # Your custom app
     'dj_rest_auth',
     'dj_rest_auth.registration',
+    'csp',
 ]
 
 AUTHENTICATION_BACKENDS = (
@@ -107,6 +108,7 @@ SITE_ID = 1  # This should match the ID of the site you created
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'csp.middleware.CSPMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -122,6 +124,12 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # URL configuration
 ROOT_URLCONF = 'profiles.urls'
+
+CSP_IMG_SRC = (
+    "'self'",
+    'data:',
+    'https://controlledmotives-backend.onrender.com',
+)
 
 # Templates settings
 TEMPLATES = [

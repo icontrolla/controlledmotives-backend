@@ -48,6 +48,7 @@ class FrontendAppView(View):
 
 
 
+
 # NFT Storage API configuration
 NFT_STORAGE_API_URL = 'https://api.nft.storage/upload'
 NFT_STORAGE_API_KEY = settings.NFT_STORAGE_API_KEY  # Set this in your settings
@@ -821,3 +822,4 @@ def delete_notification(request, notification_id):
         return Response({'detail': 'Notification deleted.'}, status=status.HTTP_200_OK)
     except Notification.DoesNotExist:
         return Response({'detail': 'Notification not found.'}, status=status.HTTP_404_NOT_FOUND)
+
