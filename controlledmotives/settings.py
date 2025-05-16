@@ -35,7 +35,11 @@ ALLOWED_HOSTS = [
 ]
 
 
+
 LOGIN_REDIRECT_URL = 'https://controntrolledmotives-frontend-1.onrender.com/home'
+
+
+
 
 CSRF_TRUSTED_ORIGINS = [
     "https://controntrolledmotives-frontend-1.onrender.com",
