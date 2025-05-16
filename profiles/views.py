@@ -7,6 +7,7 @@ from .models import (
     ExhibitionPlan, UserSubscription
 )
 
+
 from .serializers import SignupSerializer
 from rest_framework.permissions import AllowAny
 from rest_framework.throttling import UserRateThrottle
@@ -483,6 +484,18 @@ def artist_profile(request, artist_id):
         return Response(artist_data.data, status=status.HTTP_200_OK)
     except Artist.DoesNotExist:
         return Response({"error": "Artist not found"}, status=status.HTTP_404_NOT_FOUND)
+
+
+@api_view(['POST'])
+def add_flower(request, artwork_id):
+    try:
+        artwork = Artwork.objects.get(id=artwork_id)
+        artwork.flowers += 1
+        artwork.save()
+        return Response({'flowers': artwork.flowers}, status=status.HTTP_200_OK)
+    except Artwork.DoesNotExist:
+        return Response({'error': 'Artwork not found'}, status=status.HTTP_404_NOT_FOUND)
+
 
 @api_view(['POST'])
 def create_post(request):
