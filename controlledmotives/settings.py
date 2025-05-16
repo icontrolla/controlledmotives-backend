@@ -94,7 +94,7 @@ INSTALLED_APPS = [
     'profiles',  # Your custom app
     'dj_rest_auth',
     'dj_rest_auth.registration',
-    'csp',
+
 ]
 
 AUTHENTICATION_BACKENDS = (
