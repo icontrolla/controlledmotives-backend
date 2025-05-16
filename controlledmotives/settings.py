@@ -73,7 +73,6 @@ CORS_ALLOWED_ORIGINS = [
     'https://controlledmotives.com',  # Production frontend
 ]
 
-CORS_URLS_REGEX = r"^/media/.*$"
 
 # Application definition
 INSTALLED_APPS = [
@@ -132,7 +131,6 @@ CSP_IMG_SRC = (
     'https://controlledmotives-backend.onrender.com',
 )
 
-CORS_ALLOW_ALL_ORIGINS = True
 
 # Templates settings
 TEMPLATES = [
@@ -169,6 +167,8 @@ else:
         }
     }
 
+CORS_ALLOW_CREDENTIALS = True
+CORS_URLS_REGEX = r"^/.*$"
 
 # Redis configuration (optional, for caching and sessions)
 REDIS_URL = config('REDIS_URL', default='redis://localhost:6379/0')
@@ -225,14 +225,6 @@ ACCOUNT_ADAPTER = 'allauth.account.adapter.DefaultAccountAdapter'
 REST_AUTH_REGISTER_SERIALIZERS = {
     'REGISTER_SERIALIZER': 'controlledmotives.serializers.UserSerializer'
 }
-
-
-
-
-
-
-
-
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
