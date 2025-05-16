@@ -73,6 +73,7 @@ CORS_ALLOWED_ORIGINS = [
     'https://controlledmotives.com',  # Production frontend
 ]
 
+CORS_URLS_REGEX = r"^/media/.*$"
 
 # Application definition
 INSTALLED_APPS = [
@@ -224,13 +225,7 @@ REST_AUTH_REGISTER_SERIALIZERS = {
 }
 
 
-REST_AUTH = {
-    "SIGNUP_FIELDS": {
-        "username": {"required": True},
-        "email": {"required": True},
-        # add more fields if needed
-    }
-}
+
 
 
 
