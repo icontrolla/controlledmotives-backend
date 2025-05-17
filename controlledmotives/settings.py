@@ -22,9 +22,9 @@ DJANGO_ENV = os.getenv("DJANGO_ENV", "development")
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-#SECRET_KEY = config('SECRET_KEY')
+SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
-#NFT_STORAGE_API_KEY = config('NFT_STORAGE_API_KEY')
+NFT_STORAGE_API_KEY = config('NFT_STORAGE_API_KEY')
 
 ALLOWED_HOSTS = [
     "https://controntrolledmotives-frontend-1.onrender.com",
@@ -63,7 +63,7 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'frontend/static')]
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-#STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY', default='sk_test_dummy1234567890')
+STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY', default='sk_test_dummy1234567890')
 
 # CORS settings
 
