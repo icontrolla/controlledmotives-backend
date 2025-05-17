@@ -9,7 +9,10 @@ services:
     startCommand: |
       mkdir -p media/artworks
       cp -r static_init_media/artworks/* media/artworks/ || echo "No media to copy"
+      echo "=== MEDIA FILES ==="
+      ls -lR media/
       gunicorn controlledmotives.wsgi:application --bind 0.0.0.0:$PORT
+
     postDeployCommand: |
       python manage.py collectstatic --noinput
     envVars:
