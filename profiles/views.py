@@ -383,7 +383,7 @@ class AestheticMomentViewSet(viewsets.ModelViewSet):
 class ArtworkViewSet(viewsets.ModelViewSet):
     queryset = Artwork.objects.all()
     serializer_class = ArtworkSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
 # Artist Signup Serializer
 class ArtistSignupSerializer(serializers.ModelSerializer):

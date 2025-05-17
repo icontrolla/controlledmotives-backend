@@ -268,5 +268,5 @@ LOGGING = {
     },
 }
 
-SECRET_KEY='skdummy6543'
+
 # Other Django settings...
