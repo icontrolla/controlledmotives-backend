@@ -246,8 +246,7 @@ REST_FRAMEWORK = {
     ),
 }
 
-SECURE_SSL_REDIRECT = True
-SESSION_COOKIE_SECURE = True
+
 CSRF_COOKIE_SECURE = True
 
 # Logging configuration (optional)
