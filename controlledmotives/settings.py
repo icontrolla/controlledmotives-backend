@@ -56,7 +56,7 @@ CSRF_COOKIE_SECURE = True
 
 
 # Static and Media files
-STATIC_URL = '/static/'
+STATIC_URL = 'https://controlledmotives-backend.onrender.com/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'frontend/static')]
 
