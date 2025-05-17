@@ -15,22 +15,19 @@ def build_absolute_uri(context, file):
     return None
 
 class SignupSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True)
+    password = serializers.CharField(
+        write_only=True,
+        style={'input_type': 'password', 'placeholder': 'Enter password'}
+    )
 
     class Meta:
         model = User
         fields = ['username', 'email', 'password']
         extra_kwargs = {
-            'email': {'required': True},
+            'email': {'required': True, 'style': {'placeholder': 'Enter your email'}},
+            'username': {'style': {'placeholder': 'Enter username'}}
         }
 
-    def create(self, validated_data):
-        user = User.objects.create_user(
-            username=validated_data['username'],
-            email=validated_data['email'],
-            password=validated_data['password']
-        )
-        return user
 
 # Basic user serializer for nested representation
 class UserSerializer(serializers.ModelSerializer):
