@@ -60,7 +60,7 @@ STATIC_URL = 'https://controlledmotives-backend.onrender.com/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'frontend/static')]
 
-MEDIA_URL = ' "https://controlledmotives-backend.onrender.com/media/'
+MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY', default='sk_test_dummy1234567890')
