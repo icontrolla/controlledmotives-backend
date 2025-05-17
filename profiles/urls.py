@@ -13,8 +13,7 @@ from .views import (
     EthereumTransactionViewSet, PostViewSet, AestheticMomentViewSet,
     CinematographyGalleryViewSet, PhotographyContentViewSet, ArtGalleryViewSet,
     ArtCategoryViewSet, ConceptualMixedMediaViewSet, FashionArtViewSet,
-    VirtualInteractiveArtViewSet, ArtworkListAPIView, ArtistLoginView,
-    LoginView
+    VirtualInteractiveArtViewSet, ArtistLoginView, LoginView
 )
 from dj_rest_auth.registration.views import RegisterView
 
@@ -69,7 +68,6 @@ urlpatterns = [
     path('api/flower-post/<int:post_id>/', views.flower_post, name='flower_post'),
 
     # Artwork
-    path('artworks/', ArtworkListAPIView.as_view(), name='artwork-list'),
     path('api/artwork/<int:artwork_id>/buy/', views.buy_artwork, name='buy_artwork'),
     path('api/artwork/<int:artwork_id>/toggle-flower/', views.flower_post, name='toggle_flower'),
 
@@ -93,18 +91,14 @@ urlpatterns = [
     path('api/notifications/delete-all/', views.delete_all_notifications, name='delete_all_notifications'),
     path('api/notifications/delete/<int:notification_id>/', views.delete_notification, name='delete_notification'),
     path('artworks/<int:artwork_id>/flower/', views.add_flower, name='add_flower'),
+
     # Search & Feedback
     path('api/search/', views.search, name='search'),
     path('api/submit-feedback/', views.submit_feedback, name='submit_feedback'),
 
     # DRF Router Endpoints
     path('api/', include(router.urls)),
-
-
 ]
 
 # Serve media files both in DEBUG and PRODUCTION
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-else:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

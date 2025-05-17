@@ -69,8 +69,8 @@ STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY', default='sk_test_dummy1234567890
 # CORS settings
 
 CORS_ALLOWED_ORIGINS = [
-    'http://controlledmotives-backend.onrender.com',
-    'https://controntrolledmotives-frontend-1.onrender.com',  # Render frontend
+    'http://controlledmotives-backend.onrender.com',  # Render frontend
+    "https://controntrolledmotives-frontend-1.onrender.com",
     'https://controlledmotives.com',  # Production frontend
 ]
 
