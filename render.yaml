@@ -6,7 +6,10 @@ services:
     buildCommand: |
       pip install -r requirements.txt
       python manage.py migrate
-    startCommand: gunicorn controlledmotives.wsgi:application --bind 0.0.0.0:$PORT
+    startCommand: |
+      mkdir -p media/artworks
+      cp -r static_init_media/artworks/* media/artworks/ || echo "No media to copy"
+      gunicorn controlledmotives.wsgi:application --bind 0.0.0.0:$PORT
     postDeployCommand: |
       python manage.py collectstatic --noinput
     envVars:
@@ -20,7 +23,7 @@ services:
         value: "False"
       - key: DATABASE_URL
         fromDatabase:
-          name: controlledmotivesdb  # Make sure this matches your actual Render database name
+          name: controlledmotivesdb
           property: connectionString
       - key: STRIPE_SECRET_KEY
         value: "sk_test_dummy1234567890"
