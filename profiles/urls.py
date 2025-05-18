@@ -89,7 +89,7 @@ urlpatterns = [
     path('api/notifications/mark-all-read/', views.mark_all_notifications_read, name='mark_all_notifications_read'),
     path('api/notifications/delete-all/', views.delete_all_notifications, name='delete_all_notifications'),
     path('api/notifications/delete/<int:notification_id>/', views.delete_notification, name='delete_notification'),
-    path('artworks/<int:artwork_id>/flower/', views.add_flower, name='add_flower'),
+
 
     # Search & Feedback
     path('api/search/', views.search, name='search'),
