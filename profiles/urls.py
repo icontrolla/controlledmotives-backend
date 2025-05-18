@@ -68,8 +68,7 @@ urlpatterns = [
     path('api/flower-post/<int:post_id>/', views.flower_post, name='flower_post'),
 
     # Artwork
-    path('api/artwork/<int:artwork_id>/buy/', views.buy_artwork, name='buy_artwork'),
-    path('api/artwork/<int:artwork_id>/toggle-flower/', views.flower_post, name='toggle_flower'),
+    path('api/artworks/<int:artwork_id>/toggle_flower/', views.toggle_flower, name='toggle_flower'),
 
     # Payment & Subscriptions
     path('api/process-payment/<int:artwork_id>/<int:price>/', views.process_payment, name='process_payment'),

@@ -791,7 +791,7 @@ class Artwork(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     art_type = models.CharField(max_length=50, choices=ART_TYPE_CHOICES, default='design_illustration')
     is_for_sale = models.BooleanField(default=False)
-    flowers = models.PositiveIntegerField(default=0)
+    flowers = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="flowered_artworks", blank=True)
     is_featured = models.BooleanField(default=False)
     is_trending = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)

@@ -486,15 +486,6 @@ def artist_profile(request, artist_id):
         return Response({"error": "Artist not found"}, status=status.HTTP_404_NOT_FOUND)
 
 
-@api_view(['POST'])
-def add_flower(request, artwork_id):
-    try:
-        artwork = Artwork.objects.get(id=artwork_id)
-        artwork.flowers += 1
-        artwork.save()
-        return Response({'flowers': artwork.flowers}, status=status.HTTP_200_OK)
-    except Artwork.DoesNotExist:
-        return Response({'error': 'Artwork not found'}, status=status.HTTP_404_NOT_FOUND)
 
 
 @api_view(['POST'])
@@ -552,6 +543,24 @@ def delete_post(request, post_id):
         return Response({"message": "Post deleted"}, status=status.HTTP_204_NO_CONTENT)
     except Post.DoesNotExist:
         return Response({"error": "Post not found"}, status=status.HTTP_404_NOT_FOUND)
+
+
+@api_view(['POST'])
+def toggle_flower(request, artwork_id):
+    try:
+        artwork = Artwork.objects.get(id=artwork_id)
+        user = request.user
+
+        if user in artwork.flowers.all():
+            artwork.flowers.remove(user)
+            flowered = False
+        else:
+            artwork.flowers.add(user)
+            flowered = True
+
+        return Response({'flowered': flowered, 'flower_count': artwork.flowers.count()})
+    except Artwork.DoesNotExist:
+        return Response({'error': 'Artwork not found'}, status=status.HTTP_404_NOT_FOUND)
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
