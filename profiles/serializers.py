@@ -254,13 +254,7 @@ class ArtCategorySerializer(serializers.ModelSerializer):
 
 # Basic Artwork
 class ArtworkSerializer(serializers.ModelSerializer):
-    image = serializers.SerializerMethodField()
-    image_url = serializers.SerializerMethodField()
-
-    def get_image(self, obj):
-        if obj.image:
-            return obj.image.url  # or however you serve images
-        return None
+    image = serializers.SerializerMethodField('get_image_url')
 
     class Meta:
         model = Artwork
