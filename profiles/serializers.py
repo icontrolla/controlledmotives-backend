@@ -252,7 +252,15 @@ class ArtCategorySerializer(serializers.ModelSerializer):
 
 # Basic Artwork
 class ArtworkSerializer(serializers.ModelSerializer):
+    image = serializers.SerializerMethodField()
+
     class Meta:
         model = Artwork
         fields = '__all__'
 
+    def get_image(self, obj):
+        # Assuming your artwork image filename is saved in obj.image.name
+        filename = obj.image.name
+        base_url = "https://controlled-media.s3.us-east-005.backblazeb2.com/"
+        # Return full B2 url:
+        return base_url + filename

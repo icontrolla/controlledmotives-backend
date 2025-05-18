@@ -95,6 +95,7 @@ INSTALLED_APPS = [
     'profiles',  # Your custom app
     'dj_rest_auth',
     'dj_rest_auth.registration',
+    'storages'
 
 ]
 
@@ -151,6 +152,23 @@ TEMPLATES = [
         },
     },
 ]
+
+
+
+DEFAULT_FILE_STORAGE = 'controlledmotives.storage_backends.MediaStorage'
+
+
+AWS_ACCESS_KEY_ID = '1d74288f85ef'
+AWS_SECRET_ACCESS_KEY = '0051a461b12ebcda154989f994547b4b0c5e237122'
+AWS_STORAGE_BUCKET_NAME = 'controlled-media'
+AWS_S3_REGION_NAME = 'us-west-000'  # Always use 'us-west-000' for B2
+AWS_S3_ENDPOINT_URL = 'https://s3.us-west-000.backblazeb2.com'
+AWS_S3_ADDRESSING_STYLE = "virtual"
+AWS_QUERYSTRING_AUTH = False  # Set to True if bucket is private
+
+# Optional cache control for static/media
+AWS_DEFAULT_ACL = None
+
 
 # WSGI application
 WSGI_APPLICATION = 'controlledmotives.wsgi.application'

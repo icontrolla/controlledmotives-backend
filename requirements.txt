@@ -84,3 +84,6 @@ dj-database-url
 dj-rest-auth==7.0.1
 whitenoise
 django-csp>=3.7
+django-storages
+boto3
+
