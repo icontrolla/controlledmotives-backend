@@ -133,7 +133,7 @@ ROOT_URLCONF = 'profiles.urls'
 CSP_IMG_SRC = (
     "'self'",
     "data:",
-    "https://controlled-media.s3.us-west-000.backblazeb2.com",
+    "https://controlled-media.s3.us-east-005.backblazeb2.com",
 )
 
 
