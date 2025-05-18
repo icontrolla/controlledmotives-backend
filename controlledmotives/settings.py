@@ -129,11 +129,14 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # URL configuration
 ROOT_URLCONF = 'profiles.urls'
 
+
 CSP_IMG_SRC = (
     "'self'",
-    'data:',
-    'https://controlledmotives-backend.onrender.com',
+    "data:",
+    "https://controlledmotives-backend.onrender.com",
+    "https://controlled-media.s3.us-east-005.backblazeb2.com",
 )
+
 
 
 # Templates settings
