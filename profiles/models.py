@@ -786,7 +786,7 @@ class Artwork(models.Model):
 
     title = models.CharField(max_length=255)
     description = models.TextField()
-    image = models.ImageField(upload_to='artworks/')
+    image = models.ImageField(upload_to='')
     artist = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='artworks_created')
     price = models.DecimalField(max_digits=10, decimal_places=2)
     art_type = models.CharField(max_length=50, choices=ART_TYPE_CHOICES, default='design_illustration')
