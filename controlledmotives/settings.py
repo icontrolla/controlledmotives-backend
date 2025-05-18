@@ -133,7 +133,6 @@ ROOT_URLCONF = 'profiles.urls'
 CSP_IMG_SRC = (
     "'self'",
     "data:",
-    "https://controlledmotives-backend.onrender.com",
     "https://controlled-media.s3.us-east-005.backblazeb2.com",
 )
 
