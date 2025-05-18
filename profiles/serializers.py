@@ -258,6 +258,7 @@ class ArtworkSerializer(serializers.ModelSerializer):
         model = Artwork
         fields = '__all__'
 
-    def get_image(self, obj):
-        filename = obj.image.name.split("/")[-1]  # get 'Fire.png' from 'artworks/Fire.png'
-        return f"https://controlled-media.s3.us-east-005.backblazeb2.com/{filename}"
+    def get_image_url(self, obj):
+        filename = obj.image.name.split('/')[-1]  # e.g., 'Delayed Gratification.png'
+        encoded_filename = quote(filename).replace('%20', '+')  # fix for Backblaze B2
+        return f"https://controlled-media.s3.us-east-005.backblazeb2.com/{encoded_filename}"
