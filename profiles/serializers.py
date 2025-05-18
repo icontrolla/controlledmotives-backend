@@ -7,6 +7,8 @@ from .models import (
     Feedback, CinematographyGallery, PhotographyContent, ArtGallery,
     ArtCategory, Profile, ConceptualMixedMedia, FashionArt, VirtualInteractiveArt
 )
+from urllib.parse import quote
+
 
 # Utility for building full image/video URLs
 def build_absolute_uri(context, file):
