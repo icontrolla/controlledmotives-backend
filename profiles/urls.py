@@ -5,6 +5,8 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from django.contrib.auth import views as auth_views
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from django.urls import path
+
 
 from . import views
 from .views import (
@@ -48,7 +50,13 @@ router.register(r'conceptual-mixed', ConceptualMixedMediaViewSet, basename='conc
 router.register(r'fashion-art', FashionWearableArtViewSet, basename='fashion-art')
 router.register(r'fine-arts', FineArtsViewSet, basename='fine-arts')
 
+
+
+
+
+
 urlpatterns = [
+    path("api/behance/", views.get_behance_artworks),
     # Admin & Static Pages
     path('admin/', admin.site.urls),
     path('api/home/', views.home, name='api_home'),

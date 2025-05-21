@@ -13,7 +13,8 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from .models import Artwork
 from .serializers import ArtworkSerializer
-
+from django.http import JsonResponse
+import json
 
 from .serializers import SignupSerializer
 from rest_framework.permissions import AllowAny
@@ -64,6 +65,17 @@ NFT_STORAGE_API_KEY = settings.NFT_STORAGE_API_KEY  # Set this in your settings
 
 # Set your Stripe API key
 stripe.api_key = settings.STRIPE_SECRET_KEY
+
+
+
+def get_behance_artworks(request):
+    file_path = os.path.join("media", "behance_artworks.json")
+    try:
+        with open(file_path, "r") as f:
+            data = json.load(f)
+        return JsonResponse(data, safe=False)
+    except FileNotFoundError:
+        return JsonResponse({"error": "File not found"}, status=404)
 
 
 def index(request):
