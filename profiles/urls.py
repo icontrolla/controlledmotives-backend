@@ -41,7 +41,6 @@ router.register(r'cinematography', CinematographyGalleryViewSet, basename='cinem
 router.register(r'art-galleries', ArtGalleryViewSet, basename='art-gallery')
 router.register(r'categories', ArtCategoryViewSet, basename='category')
 router.register(r'conceptual-media', ConceptualMixedMediaViewSet, basename='conceptual-media')
-router.register(r'fashion-art', FashionArtViewSet, basename='fashion-art')
 router.register(r'virtual-art', VirtualInteractiveArtViewSet, basename='virtual-art')
 router.register(r'photography', PhotographyCinematicsViewSet, basename='photography')
 router.register(r'abstract-art', AbstractArtViewSet, basename='abstract-art')
