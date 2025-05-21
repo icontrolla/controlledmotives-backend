@@ -1,0 +1,10 @@
+[
+  {
+    "title": "Mock Artwork",
+    "image": "https://via.placeholder.com/600x400.png?text=Art",
+    "artist": "mockartist",
+    "url": "https://behance.net/mockproject",
+    "tags": ["abstract", "test"],
+    "category": "Abstract Art"
+  }
+]
