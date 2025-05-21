@@ -13,7 +13,11 @@ from .views import (
     EthereumTransactionViewSet, PostViewSet, AestheticMomentViewSet,
     CinematographyGalleryViewSet, PhotographyContentViewSet, ArtGalleryViewSet,
     ArtCategoryViewSet, ConceptualMixedMediaViewSet, FashionArtViewSet,
-    VirtualInteractiveArtViewSet, ArtistLoginView, LoginView
+    VirtualInteractiveArtViewSet, ArtistLoginView, LoginView, PhotographyCinematicsViewSet,
+    AbstractArtViewSet,
+    ConceptualMixedMediaViewSet,
+    FashionWearableArtViewSet,
+    FineArtsViewSet,
 )
 from dj_rest_auth.registration.views import RegisterView
 
@@ -33,12 +37,17 @@ router.register(r'transactions', EthereumTransactionViewSet, basename='transacti
 router.register(r'posts', PostViewSet, basename='post')
 router.register(r'moments', AestheticMomentViewSet, basename='moment')
 router.register(r'cinematography', CinematographyGalleryViewSet, basename='cinematography')
-router.register(r'photography', PhotographyContentViewSet, basename='photography')
+
 router.register(r'art-galleries', ArtGalleryViewSet, basename='art-gallery')
 router.register(r'categories', ArtCategoryViewSet, basename='category')
 router.register(r'conceptual-media', ConceptualMixedMediaViewSet, basename='conceptual-media')
 router.register(r'fashion-art', FashionArtViewSet, basename='fashion-art')
 router.register(r'virtual-art', VirtualInteractiveArtViewSet, basename='virtual-art')
+router.register(r'photography', PhotographyCinematicsViewSet, basename='photography')
+router.register(r'abstract-art', AbstractArtViewSet, basename='abstract-art')
+router.register(r'conceptual-mixed', ConceptualMixedMediaViewSet, basename='conceptual-mixed')
+router.register(r'fashion-art', FashionWearableArtViewSet, basename='fashion-art')
+router.register(r'fine-arts', FineArtsViewSet, basename='fine-arts')
 
 urlpatterns = [
     # Admin & Static Pages

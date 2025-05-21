@@ -7,6 +7,13 @@ from .models import (
     ExhibitionPlan, UserSubscription
 )
 
+from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.filters import SearchFilter, OrderingFilter
+from django_filters.rest_framework import DjangoFilterBackend
+from .models import Artwork
+from .serializers import ArtworkSerializer
+
 
 from .serializers import SignupSerializer
 from rest_framework.permissions import AllowAny
@@ -66,6 +73,41 @@ def index(request):
 w3 = Web3(Web3.HTTPProvider('https://mainnet.infura.io/v3/YOUR_INFURA_PROJECT_ID'))
 
 
+class BaseArtTypeViewSet(viewsets.ModelViewSet):
+    serializer_class = ArtworkSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    filterset_fields = ['is_for_sale', 'is_featured', 'is_trending', 'blockchain']
+    search_fields = ['title', 'description', 'artist__username']
+    ordering_fields = ['created_at', 'price']
+
+    def get_queryset(self):
+        return Artwork.objects.filter(art_type=self.art_type).order_by('-created_at')
+
+class ArtworkViewSet(viewsets.ModelViewSet):
+    queryset = Artwork.objects.all().order_by('-created_at')
+    serializer_class = ArtworkSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    filterset_fields = ['art_type', 'is_for_sale', 'is_featured', 'is_trending', 'blockchain']
+    search_fields = ['title', 'description', 'artist__username']
+    ordering_fields = ['created_at', 'price']
+
+
+class PhotographyCinematicsViewSet(BaseArtTypeViewSet):
+    art_type = 'photography_cinematics'
+
+class AbstractArtViewSet(BaseArtTypeViewSet):
+    art_type = 'abstract_art'
+
+class ConceptualMixedMediaViewSet(BaseArtTypeViewSet):
+    art_type = 'conceptual_mixed_media'
+
+class FashionWearableArtViewSet(BaseArtTypeViewSet):
+    art_type = 'fashion_wearable_art'
+
+class FineArtsViewSet(BaseArtTypeViewSet):
+    art_type = 'fine_arts'
 
 
 @api_view(['GET'])
@@ -452,6 +494,7 @@ class LoginView(APIView):
                 {"error": "Invalid credentials"},
                 status=status.HTTP_401_UNAUTHORIZED
             )
+
 
 class ArtistLoginView(APIView):
     def post(self, request, *args, **kwargs):

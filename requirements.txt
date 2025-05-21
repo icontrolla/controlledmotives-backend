@@ -86,4 +86,5 @@ whitenoise
 django-csp>=3.7
 django-storages
 boto3
+beautifulsoup4
 
