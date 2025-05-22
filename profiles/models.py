@@ -840,7 +840,7 @@ class SecureFile(models.Model):
 class ArtworkGallery(models.Model):
     gallery = models.ForeignKey(Gallery, on_delete=models.CASCADE)
     added_at = models.DateTimeField(auto_now_add=True)
-    flowers = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='flowered_artworks', blank=True)
+    flowers = models.ManyToManyField(User, related_name='flowered_artworkgalleries', blank=True)
     blockchain = models.CharField(max_length=100, choices=[
         ('ethereum', 'Ethereum'),
         ('polygon', 'Polygon'),

@@ -22,11 +22,11 @@ DJANGO_ENV = os.getenv("DJANGO_ENV", "development")
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = config('SECRET_KEY')
-#SECRET_KEY = 'skdummy123'
+#SECRET_KEY = config('SECRET_KEY')
+SECRET_KEY = 'skdummy123'
 DEBUG = config('DEBUG', default=False, cast=bool)
-NFT_STORAGE_API_KEY = config('NFT_STORAGE_API_KEY')
-STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY', default='sk_test_dummy1234567890')
+#NFT_STORAGE_API_KEY = config('NFT_STORAGE_API_KEY')
+#STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY', default='sk_test_dummy1234567890')
 
 ALLOWED_HOSTS = [
     "https://controntrolledmotives-frontend-1.onrender.com",
@@ -207,7 +207,8 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_SIGNUP_FIELDS = ['email', 'username', 'password1', 'password2']
+
 ACCOUNT_EMAIL_VERIFICATION = "optional"  # or "mandatory" if you want email verification
 SOCIALACCOUNT_QUERY_EMAIL = True
 SOCIALACCOUNT_EMAIL_REQUIRED = True
