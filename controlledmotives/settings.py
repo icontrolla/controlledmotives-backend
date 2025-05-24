@@ -28,6 +28,7 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 #NFT_STORAGE_API_KEY = config('NFT_STORAGE_API_KEY')
 #STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY', default='sk_test_dummy1234567890')
 
+
 ALLOWED_HOSTS = [
     "https://controntrolledmotives-frontend-1.onrender.com",
     "https://controlledmotives-backend.onrender.com",
@@ -96,7 +97,8 @@ INSTALLED_APPS = [
     'profiles',  # Your custom app
     'dj_rest_auth',
     'dj_rest_auth.registration',
-    'storages'
+    'django_q',
+
 
 ]
 
@@ -129,6 +131,16 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # URL configuration
 ROOT_URLCONF = 'profiles.urls'
+
+Q_CLUSTER = {
+    "name": "controlled-motives",
+    "workers": 4,
+    "retry": 120,
+    "timeout": 300,
+    "queue_limit": 50,
+    "bulk": 10,
+    "orm": "default",  # use Django ORM for persistence
+}
 
 
 CSP_IMG_SRC = (
@@ -163,8 +175,8 @@ DEFAULT_FILE_STORAGE = 'controlledmotives.storage_backends.MediaStorage'
 AWS_ACCESS_KEY_ID = '1d74288f85ef'
 AWS_SECRET_ACCESS_KEY = '0051a461b12ebcda154989f994547b4b0c5e237122'
 AWS_STORAGE_BUCKET_NAME = 'controlled-media'
-AWS_S3_REGION_NAME = 'us-west-000'  # Always use 'us-west-000' for B2
-AWS_S3_ENDPOINT_URL = 'https://s3.us-west-000.backblazeb2.com'
+AWS_S3_REGION_NAME = 'us-east-005'  # Always use 'us-west-000' for B2
+AWS_S3_ENDPOINT_URL = 'https://s3.us-east-005.backblazeb2.com'
 AWS_S3_ADDRESSING_STYLE = "virtual"
 AWS_QUERYSTRING_AUTH = False  # Set to True if bucket is private
 

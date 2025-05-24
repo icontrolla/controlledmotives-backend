@@ -88,5 +88,5 @@ django-storages
 boto3
 beautifulsoup4
 django-filter
-
-
+selenium
+django-q2
