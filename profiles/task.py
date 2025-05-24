@@ -1,7 +1,7 @@
-from celery import shared_task
-from .models import Artwork
 import asyncio
+from .models import Artwork
 from playwright.async_api import async_playwright
+from django_q.tasks import async_task
 
 async def async_scrape_pinterest(url, scrolls=6):
     async with async_playwright() as p:
@@ -29,24 +29,12 @@ async def async_scrape_pinterest(url, scrolls=6):
                         "image_url": img_url,
                         "source_url": href
                     })
-            except:
+            except Exception:
                 continue
 
         await browser.close()
         return pins_data
 
 
-def scrape_pinterest_q(url, scrolls=6):
-    """This is the Django-Q task function"""
+def scrape_pinterest(url, scrolls=6):
     return asyncio.run(async_scrape_pinterest(url, scrolls))
-
-@shared_task
-def update_trending_artworks():
-    """Automatically update trending status for artworks based on views and likes."""
-    artworks = Artwork.objects.all()
-    for artwork in artworks:
-        if artwork.likes > 50:  # Example threshold
-            artwork.is_trending = True
-        else:
-            artwork.is_trending = False
-        artwork.save()

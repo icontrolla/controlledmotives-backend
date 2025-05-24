@@ -11,15 +11,13 @@ PINTEREST_PASSWORD = "Controll3r@2004"
 async def login_pinterest(page):
     await page.goto("https://www.pinterest.com/login/", timeout=20000)
 
-    await page.fill('input[name="id"]', PINTEREST_EMAIL)
-    await page.fill('input[name="password"]', PINTEREST_PASSWORD)
+    await page.wait_for_selector('input[type="email"]', timeout=20000)
+    await page.fill('input[type="email"]', PINTEREST_EMAIL)
+    await page.fill('input[type="password"]', PINTEREST_PASSWORD)
     await page.click('button[type="submit"]')
 
-    # Debug: take a screenshot after clicking login
-    await page.screenshot(path="after_login.png")
-
-    # Try waiting for a more stable selector after login
     await page.wait_for_selector("div[data-test-id='header-profile']", timeout=20000)
+    await page.screenshot(path="after_login.png")
 
 
 async def scrape_pinterest(url, scrolls=6):
