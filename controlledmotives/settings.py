@@ -135,12 +135,13 @@ ROOT_URLCONF = 'profiles.urls'
 Q_CLUSTER = {
     "name": "controlled-motives",
     "workers": 4,
-    "retry": 120,
-    "timeout": 300,
+    "retry": 3600,
+    "timeout": 3000,
     "queue_limit": 50,
     "bulk": 10,
-    "orm": "default",  # use Django ORM for persistence
+    "orm": "default",
 }
+
 
 
 CSP_IMG_SRC = (
