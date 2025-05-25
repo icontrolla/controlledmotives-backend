@@ -36,6 +36,7 @@ def register_retry_handler(client):
 
 
 class ClientRateLimiter:
+
     _MAX_RATE_ADJUST_SCALE = 2.0
 
     def __init__(

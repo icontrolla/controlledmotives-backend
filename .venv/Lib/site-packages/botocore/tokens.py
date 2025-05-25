@@ -23,12 +23,13 @@ from dateutil.tz import tzutc
 from botocore import UNSIGNED
 from botocore.compat import total_seconds
 from botocore.config import Config
+from botocore.credentials import JSONFileCache
 from botocore.exceptions import (
     ClientError,
     InvalidConfigError,
     TokenRetrievalError,
 )
-from botocore.utils import CachedProperty, JSONFileCache, SSOTokenLoader
+from botocore.utils import CachedProperty, SSOTokenLoader
 
 logger = logging.getLogger(__name__)
 
@@ -181,31 +182,26 @@ class SSOTokenProvider:
         "sso_region",
     ]
     _GRANT_TYPE = "refresh_token"
-    DEFAULT_CACHE_CLS = JSONFileCache
 
-    def __init__(
-        self, session, cache=None, time_fetcher=_utc_now, profile_name=None
-    ):
+    def __init__(self, session, cache=None, time_fetcher=_utc_now):
         self._session = session
         if cache is None:
-            cache = self.DEFAULT_CACHE_CLS(
+            cache = JSONFileCache(
                 self._SSO_TOKEN_CACHE_DIR,
                 dumps_func=_sso_json_dumps,
             )
         self._now = time_fetcher
         self._cache = cache
         self._token_loader = SSOTokenLoader(cache=self._cache)
-        self._profile_name = (
-            profile_name
-            or self._session.get_config_variable("profile")
-            or 'default'
-        )
 
     def _load_sso_config(self):
         loaded_config = self._session.full_config
         profiles = loaded_config.get("profiles", {})
         sso_sessions = loaded_config.get("sso_sessions", {})
-        profile_config = profiles.get(self._profile_name, {})
+        profile_name = self._session.get_config_variable("profile")
+        if not profile_name:
+            profile_name = "default"
+        profile_config = profiles.get(profile_name, {})
 
         if "sso_session" not in profile_config:
             return
@@ -215,7 +211,7 @@ class SSOTokenProvider:
 
         if not sso_config:
             error_msg = (
-                f'The profile "{self._profile_name}" is configured to use the SSO '
+                f'The profile "{profile_name}" is configured to use the SSO '
                 f'token provider but the "{sso_session_name}" sso_session '
                 f"configuration does not exist."
             )
@@ -228,7 +224,7 @@ class SSOTokenProvider:
 
         if missing_configs:
             error_msg = (
-                f'The profile "{self._profile_name}" is configured to use the SSO '
+                f'The profile "{profile_name}" is configured to use the SSO '
                 f"token provider but is missing the following configuration: "
                 f"{missing_configs}."
             )

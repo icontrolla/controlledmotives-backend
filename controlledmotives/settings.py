@@ -173,8 +173,8 @@ TEMPLATES = [
 DEFAULT_FILE_STORAGE = 'controlledmotives.storage_backends.MediaStorage'
 
 
-AWS_ACCESS_KEY_ID = '1d74288f85ef'
-AWS_SECRET_ACCESS_KEY = '0051a461b12ebcda154989f994547b4b0c5e237122'
+AWS_ACCESS_KEY_ID = '0051d74288f85ef0000000003'
+AWS_SECRET_ACCESS_KEY = 'K005DrjWYhvXjb2Csfg/MlXTQMfmBWg'
 AWS_STORAGE_BUCKET_NAME = 'controlled-media'
 AWS_S3_REGION_NAME = 'us-east-005'  # Always use 'us-west-000' for B2
 AWS_S3_ENDPOINT_URL = 'https://s3.us-east-005.backblazeb2.com'

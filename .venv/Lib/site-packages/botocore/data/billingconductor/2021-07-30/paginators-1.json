@@ -69,12 +69,6 @@
       ],
       "output_token": "NextToken",
       "result_key": "AssociatedResources"
-    },
-    "ListCustomLineItemVersions": {
-      "input_token": "NextToken",
-      "limit_key": "MaxResults",
-      "output_token": "NextToken",
-      "result_key": "CustomLineItemVersions"
     }
   }
 }
