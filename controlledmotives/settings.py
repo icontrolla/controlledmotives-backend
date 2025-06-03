@@ -50,6 +50,7 @@ LOGIN_REDIRECT_URL = 'https://controntrolledmotives-frontend-1.onrender.com'
 CSRF_TRUSTED_ORIGINS = [
     "https://controntrolledmotives-frontend-1.onrender.com",
     "https://controlledmotives-backend.onrender.com",
+    "https://controlledmotives.art",
 
 ]
 
@@ -73,7 +74,8 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'frontend/static')]
 CORS_ALLOWED_ORIGINS = [
     'http://controlledmotives-backend.onrender.com',  # Render frontend
     "https://controntrolledmotives-frontend-1.onrender.com",
-    'https://controlledmotives.com',  # Production frontend
+    'https://controlledmotives.art',  # Production frontend
+    "http://localhost:3000",
 ]
 
 
@@ -98,8 +100,6 @@ INSTALLED_APPS = [
     'dj_rest_auth',
     'dj_rest_auth.registration',
     'django_q',
-
-
 ]
 
 AUTHENTICATION_BACKENDS = (

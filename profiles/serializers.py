@@ -255,6 +255,7 @@ class ArtCategorySerializer(serializers.ModelSerializer):
 # Basic Artwork
 class ArtworkSerializer(serializers.ModelSerializer):
     image = serializers.SerializerMethodField('get_image_url')
+    creator_wallet = serializers.CharField(source='artist.wallet', read_only=True)
 
     class Meta:
         model = Artwork

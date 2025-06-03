@@ -125,6 +125,8 @@ class PostForm(forms.ModelForm):
 
 from .models import Artwork
 
+
+
 class UserSignupForm(forms.ModelForm):
     password2 = forms.CharField(widget=forms.PasswordInput, required=True, label="Confirm Password")
 
