@@ -8,13 +8,14 @@ import boto3
 from django.conf import settings
 from django.core.management.base import BaseCommand
 from playwright.async_api import async_playwright
+from dotenv import load_dotenv
 
-# Pinterest credentials
-PINTEREST_EMAIL = "walternyika20@gmail.com"
-PINTEREST_PASSWORD = "Controll3r@2004"
+load_dotenv()  # Load environment variables from .env
 
-# DeepSeek API key
-OPENROUTER_API_KEY = "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"  # <- Replace this with your actual DeepSeek key
+# Pinterest credentials and API key from environment
+PINTEREST_EMAIL="walternyika20@gmail.com"
+PINTEREST_PASSWORD="Controll3r@2004"
+OPENROUTER_API_KEY = "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"
 
 # Headers
 HEADERS = {
@@ -30,8 +31,6 @@ logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
 
 
-
-# Function to classify image using DeepSeek Vision (or similar AI API)
 def classify_image(image_url):
     try:
         prompt = f"Classify this artwork: {image_url}"
@@ -48,12 +47,11 @@ def classify_image(image_url):
 
 
 async def generate_ai_description(image_url):
-    prompt = (
-        f"Analyze this artwork image and generate a JSON output in the format:\n"
-        f'{"category": "e.g. finearts, virtuall-art, conceptual-art, design-illustration, photography, abstract, fashion", '
-        f'"description": "Max 20-word description of style, color, and feeling"}\n\n'
-        f"Image URL: {image_url}"
-    )
+    prompt = f"""Analyze this artwork image and generate a JSON output in the format:
+{{"category": "e.g. finearts, virtual-art, conceptual-art, design-illustration, photography, abstract, fashion",
+"description": "Max 20-word description of style, color, and feeling"}}
+
+Image URL: {image_url}"""
 
     headers = {
         "Authorization": f"Bearer {OPENROUTER_API_KEY}",
@@ -131,7 +129,7 @@ async def scrape_pinterest(url, scrolls=6):
                         "category": ai_data.get("category", "Unknown"),
                         "description": ai_data.get("description", "")
                     })
-                    await asyncio.sleep(1)  # rate limit protection
+                    await asyncio.sleep(1)
             except Exception as e:
                 logger.warning(f"Error scraping a pin: {e}")
                 continue
@@ -164,7 +162,6 @@ def upload_to_b2(json_data, filename="behance_artworks.json"):
         logger.error(f"Error reading existing file: {e}")
         existing_data = []
 
-    # Optional: Remove duplicates based on image_url
     existing_urls = {item['image_url'] for item in existing_data}
     new_data = [item for item in json_data if item['image_url'] not in existing_urls]
 
