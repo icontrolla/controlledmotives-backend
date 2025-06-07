@@ -6,7 +6,7 @@ from rest_framework.routers import DefaultRouter
 from django.contrib.auth import views as auth_views
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from django.urls import path
-
+from .views import AllArtistsAPIView
 
 from . import views
 from .views import (
@@ -72,7 +72,7 @@ urlpatterns = [
     path('api/logout/', auth_views.LogoutView.as_view(next_page='/'), name='logout'),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-
+    path('api/artists/', AllArtistsAPIView.as_view(), name='api-all-artists'),
     # Profiles & Artist Info
     path('api/my-profile/', views.Profile, name='my_profile'),
     path('api/artist-profile/<int:artist_id>/', views.artist_profile, name='artist_profile'),

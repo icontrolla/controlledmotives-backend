@@ -6,18 +6,12 @@ from .models import (
     ArtGallery, ArtCategory, Profile, ConceptualMixedMedia, FashionArt, VirtualInteractiveArt,
     ExhibitionPlan, UserSubscription
 )
-
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.filters import SearchFilter, OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
-from .models import Artwork
-from .serializers import ArtworkSerializer
 from django.http import JsonResponse
 import json
-
-from .serializers import SignupSerializer
-from rest_framework.permissions import AllowAny
 from rest_framework.throttling import UserRateThrottle
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
@@ -48,6 +42,22 @@ from web3 import Web3
 from django.http import HttpResponse
 from django.views.generic import View
 import os
+
+
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.permissions import AllowAny
+from .models import Artist
+from .serializers import ArtistSerializer
+
+class AllArtistsAPIView(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request, *args, **kwargs):
+        artists = Artist.objects.all().select_related('user')
+        serializer = ArtistSerializer(artists, many=True, context={'request': request})
+        return Response(serializer.data)
 
 # Define the FrontendAppView here
 class FrontendAppView(View):
