@@ -5,21 +5,17 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from django.contrib.auth import views as auth_views
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-from django.urls import path
-from .views import AllArtistsAPIView
 
 from . import views
 from .views import (
+    AllArtistsAPIView,
     ArtworkViewSet, FineArtViewSet, ArtistViewSet, ThriftStoreItemViewSet,
     PaintingViewSet, DrawingViewSet, NotificationViewSet, SubscriptionPlanViewSet,
     EthereumTransactionViewSet, PostViewSet, AestheticMomentViewSet,
     CinematographyGalleryViewSet, PhotographyContentViewSet, ArtGalleryViewSet,
     ArtCategoryViewSet, ConceptualMixedMediaViewSet, FashionArtViewSet,
     VirtualInteractiveArtViewSet, ArtistLoginView, LoginView, PhotographyCinematicsViewSet,
-    AbstractArtViewSet,
-    ConceptualMixedMediaViewSet,
-    FashionWearableArtViewSet,
-    FineArtsViewSet,
+    AbstractArtViewSet, FashionWearableArtViewSet, FineArtsViewSet,
 )
 from dj_rest_auth.registration.views import RegisterView
 
@@ -39,7 +35,6 @@ router.register(r'transactions', EthereumTransactionViewSet, basename='transacti
 router.register(r'posts', PostViewSet, basename='post')
 router.register(r'moments', AestheticMomentViewSet, basename='moment')
 router.register(r'cinematography', CinematographyGalleryViewSet, basename='cinematography')
-
 router.register(r'art-galleries', ArtGalleryViewSet, basename='art-gallery')
 router.register(r'categories', ArtCategoryViewSet, basename='category')
 router.register(r'conceptual-media', ConceptualMixedMediaViewSet, basename='conceptual-media')
@@ -50,19 +45,16 @@ router.register(r'conceptual-mixed', ConceptualMixedMediaViewSet, basename='conc
 router.register(r'fashion-art', FashionWearableArtViewSet, basename='fashion-art')
 router.register(r'fine-arts', FineArtsViewSet, basename='fine-arts')
 
-
-
-
-
-
 urlpatterns = [
+    # Behance API endpoint
     path("api/behance/", views.get_behance_artworks),
+
     # Admin & Static Pages
     path('admin/', admin.site.urls),
     path('api/home/', views.home, name='api_home'),
     path('api/about/', views.about_page, name='about'),
 
-    # Auth
+    # Authentication
     path('accounts/', include('allauth.urls')),
     path('api/', include('dj_rest_auth.urls')),
     path('api/signup/', include('dj_rest_auth.registration.urls')),
@@ -72,7 +64,11 @@ urlpatterns = [
     path('api/logout/', auth_views.LogoutView.as_view(next_page='/'), name='logout'),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('api/artists/', AllArtistsAPIView.as_view(), name='api-all-artists'),
+
+    # Artist APIs
+    # Changed from /api/artists/ to /api/all-artists/ to avoid conflict with router
+    path('api/all-artists/', AllArtistsAPIView.as_view(), name='api-all-artists'),
+
     # Profiles & Artist Info
     path('api/my-profile/', views.Profile, name='my_profile'),
     path('api/artist-profile/<int:artist_id>/', views.artist_profile, name='artist_profile'),
@@ -106,14 +102,13 @@ urlpatterns = [
     path('api/notifications/delete-all/', views.delete_all_notifications, name='delete_all_notifications'),
     path('api/notifications/delete/<int:notification_id>/', views.delete_notification, name='delete_notification'),
 
-
     # Search & Feedback
     path('api/search/', views.search, name='search'),
     path('api/submit-feedback/', views.submit_feedback, name='submit_feedback'),
 
-    # DRF Router Endpoints
+    # DRF Router endpoints (all prefixed with /api/)
     path('api/', include(router.urls)),
 ]
 
-# Serve media files both in DEBUG and PRODUCTION
+# Serve media files in development
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
