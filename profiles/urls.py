@@ -57,7 +57,7 @@ urlpatterns = [
     # Authentication
     path('accounts/', include('allauth.urls')),
     path('api/', include('dj_rest_auth.urls')),
-    path('api/signup/', include('dj_rest_auth.registration.urls')),
+    path('api/signup/', RegisterArtistView.as_view(), name='register-artist'),
     path('auth/registration/', RegisterView.as_view(), name='rest_register'),
     path('login/', LoginView.as_view(), name='login'),
     path('api/artist-login/', ArtistLoginView.as_view(), name='artist_login'),

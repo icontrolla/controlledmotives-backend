@@ -42,9 +42,7 @@ from web3 import Web3
 from django.http import HttpResponse
 from django.views.generic import View
 import os
-
-
-
+from .serializers import ArtistSignupSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
@@ -59,6 +57,14 @@ class AllArtistsAPIView(APIView):
         serializer = ArtistSerializer(artists, many=True, context={'request': request})
         return Response(serializer.data)
 
+
+class RegisterArtistView(APIView):
+    def post(self, request):
+        serializer = ArtistSignupSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": "Artist registered successfully"}, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 # Define the FrontendAppView here
 class FrontendAppView(View):
     def get(self, request):

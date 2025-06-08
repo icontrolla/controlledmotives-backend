@@ -30,6 +30,22 @@ class SignupSerializer(serializers.ModelSerializer):
             'username': {'style': {'placeholder': 'Enter username'}}
         }
 
+class ArtistSignupSerializer(serializers.ModelSerializer):
+    username = serializers.CharField(write_only=True)
+    password = serializers.CharField(write_only=True)
+    email = serializers.EmailField(write_only=True)
+
+    class Meta:
+        model = Artist
+        fields = ['username', 'password', 'email', 'bio', 'profile_image', 'wallet_address', 'primary_category']
+
+    def create(self, validated_data):
+        username = validated_data.pop('username')
+        password = validated_data.pop('password')
+        email = validated_data.pop('email')
+        user = User.objects.create_user(username=username, password=password, email=email)
+        artist = Artist.objects.create(user=user, **validated_data)
+        return artist
 
 # Basic user serializer for nested representation
 class UserSerializer(serializers.ModelSerializer):
