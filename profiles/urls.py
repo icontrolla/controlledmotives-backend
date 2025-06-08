@@ -67,7 +67,7 @@ urlpatterns = [
 
     # Artist APIs
     # Changed from /api/artists/ to /api/all-artists/ to avoid conflict with router
-    path('api/all-artists/', AllArtistsAPIView.as_view(), name='api-all-artists'),
+    path('api/artists/', AllArtistsAPIView.as_view(), name='api-all-artists'),
 
     # Profiles & Artist Info
     path('api/my-profile/', views.Profile, name='my_profile'),
