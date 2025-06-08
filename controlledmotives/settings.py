@@ -69,6 +69,16 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'frontend/static')]
 
 CSP_SCRIPT_SRC = ("'self'", "'unsafe-eval'")
 
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',  # ← this is okay
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+}
+
+
 
 # CORS settings
 
