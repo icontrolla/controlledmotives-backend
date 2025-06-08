@@ -6,9 +6,11 @@ from rest_framework.routers import DefaultRouter
 from django.contrib.auth import views as auth_views
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
+
 from . import views
 from .views import (
     AllArtistsAPIView,
+    RegisterArtistView,
     ArtworkViewSet, FineArtViewSet, ArtistViewSet, ThriftStoreItemViewSet,
     PaintingViewSet, DrawingViewSet, NotificationViewSet, SubscriptionPlanViewSet,
     EthereumTransactionViewSet, PostViewSet, AestheticMomentViewSet,
