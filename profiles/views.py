@@ -65,6 +65,8 @@ class RegisterArtistView(APIView):
             serializer.save()
             return Response({"message": "Artist registered successfully"}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 # Define the FrontendAppView here
 class FrontendAppView(View):
     def get(self, request):
