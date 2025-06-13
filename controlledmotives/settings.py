@@ -107,7 +107,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     'rest_framework',
     'rest_framework.authtoken',
-    'profiles',  # Your custom app
+    'profiles',
     'dj_rest_auth',
     'dj_rest_auth.registration',
     'django_q',
