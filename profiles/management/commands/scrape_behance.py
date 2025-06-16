@@ -47,11 +47,15 @@ def classify_image(image_url):
 
 
 async def generate_ai_description(image_url):
-    prompt = f"""Analyze this artwork image and generate a JSON output in the format:
-{{"category": "e.g. finearts, virtual-art, conceptual-art, design-illustration, photography, abstract, fashion",
-"description": "Max 20-word description of style, color, and feeling"}}
+    prompt = f"""You are an art critic. Analyze this artwork image and respond in the following JSON format:
 
-Image URL: {image_url}"""
+{{
+  "category": "Choose one: finearts, conceptual-art, fashion, photography, abstract, design-illustration, virtual-art",
+  "description": "Max 12 words describing the mood, style, and colors of the artwork"
+}}
+
+Image URL: {image_url}
+"""
 
     headers = {
         "Authorization": f"Bearer {OPENROUTER_API_KEY}",
