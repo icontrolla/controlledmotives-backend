@@ -16,6 +16,15 @@ my_date = timezone.make_aware(datetime.datetime.now())
 # Subscription Plan Model
 
 
+class CustomUser(AbstractUser):
+    email = models.EmailField(unique=True)
+    google_id = models.CharField(max_length=255, null=True, blank=True)
+    profile_image_url = models.URLField(null=True, blank=True)
+    is_artist = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.username
+
 
 # Thrift Store Item Model
 class ThriftStoreItem(models.Model):
@@ -99,7 +108,6 @@ class ArtGallery(models.Model):
     description = models.TextField(blank=True, null=True)  # Optional description
     image = models.ImageField(upload_to='art_galleries/')  # Gallery image
     created_at = models.DateTimeField(auto_now_add=True)  # Auto timestamp for creation
-    flowers = models.IntegerField(default=0)
     users_who_flowered = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='flowered', blank=True)
 
     # NFT & Blockchain fields
@@ -828,23 +836,6 @@ class SecureFile(models.Model):
         return decrypt_data(self.encrypted_content)
 
 
-class ArtworkGallery(models.Model):
-    gallery = models.ForeignKey(Gallery, on_delete=models.CASCADE)
-    added_at = models.DateTimeField(auto_now_add=True)
-    flowers = models.ManyToManyField(User, related_name='flowered_artworkgalleries', blank=True)
-    blockchain = models.CharField(max_length=100, choices=[
-        ('ethereum', 'Ethereum'),
-        ('polygon', 'Polygon'),
-        ('solana', 'Solana'),
-        ('other', 'Other')
-    ], blank=True, null=True)
-    copyright_hash = models.CharField(max_length=255, null=True, blank=True)
-
-    def total_flowers(self):
-        return self.flowers.count()
-
-    def __str__(self):
-        return self.title
 
 
 class CinematographyGallery(models.Model):
@@ -919,7 +910,7 @@ class FloweredArtwork(models.Model):
         related_name='flowered_by_user'
     )
     related_artwork = models.ForeignKey(  # Renamed from 'artwork'
-        ArtworkGallery,
+        ArtGallery,
         on_delete=models.CASCADE,
         related_name='related_flowered_set'
     )
@@ -930,7 +921,7 @@ class FloweredArtwork(models.Model):
 
 class FlowerGiver(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  # Dynamically points to the user model
-    artwork = models.ForeignKey(ArtworkGallery, on_delete=models.CASCADE)
+    artwork = models.ForeignKey(ArtGallery, on_delete=models.CASCADE)
     has_given = models.BooleanField(default=False)  # Track if user has given a flower
     flowers_given = models.PositiveIntegerField(default=0)
 
@@ -956,7 +947,7 @@ class ArtSubcategory(models.Model):
 
 
 class NFTTransaction(models.Model):
-    artwork = models.ForeignKey(ArtworkGallery, on_delete=models.CASCADE)
+    artwork = models.ForeignKey(ArtGallery, on_delete=models.CASCADE)
     buyer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='bought_nfts')
     seller = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='sold_nfts')
     transaction_hash = models.CharField(max_length=255, null=True, blank=True)
@@ -1275,75 +1266,5 @@ class AestheticMoment(models.Model):
 
 
 
-class CustomUserManager(BaseUserManager):
-    def create_user(self, username, email, password=None, **extra_fields):
-        if not email:
-            raise ValueError('The Email field must be set')
-        email = self.normalize_email(email)
-        user = self.model(username=username, email=email, **extra_fields)
-        user.set_password(password)
-        user.save(using=self._db)
-        return user
-
-    def create_superuser(self, username, email, password=None, **extra_fields):
-        extra_fields.setdefault('is_staff', True)
-        extra_fields.setdefault('is_superuser', True)
-        return self.create_user(username, email, password, **extra_fields)
 
 
-class CustomUser(AbstractUser):
-    BLOCKCHAIN_CHOICES = [
-        ('ethereum', 'Ethereum'),
-        ('polygon', 'Polygon'),
-        ('solana', 'Solana'),
-        ('bitcoin', 'Bitcoin'),
-    ]
-    bio = models.TextField(blank=True, null=True)
-    profile_picture = models.ImageField(upload_to="profile_pics/", blank=True, null=True)
-    is_artist = models.BooleanField(default=False)  # Flag to indicate if the user is an artist
-    total_flowers = models.PositiveIntegerField(default=0)  # Flowers received (likes)
-    is_major = models.BooleanField(default=False)  # Flag for major artists
-    # Other fields
-
-    wallet_address = models.CharField(max_length=255, blank=True, null=True,
-    help_text="User's blockchain wallet address")
-    blockchain_type = models.CharField(
-        max_length=50,
-        choices=BLOCKCHAIN_CHOICES,
-        blank=True,
-        null=True,
-        help_text="Type of blockchain the user is associated with"
-    )
-    groups = models.ManyToManyField(
-        Group,
-        related_name="customuser_groups",  # Unique related_name
-        blank=True,
-    )
-    user_permissions = models.ManyToManyField(
-        Permission,
-        related_name="customuser_permissions",  # Unique related_name
-        blank=True,
-    )
-
-    SUBSCRIPTION_CHOICES = [
-        ('free', "Free"),
-        ('basic', 'Basic'),
-        ('premium', 'Premium')
-    ]
-    subscription_plan = models.CharField(max_length=10, choices=SUBSCRIPTION_CHOICES, default='free')
-
-
-    objects = CustomUserManager()
-
-    def is_active_subscription(self):
-        if self.subscription_end_date:
-            return self.subscription_end_date
-        return False
-
-
-
-class Meta:
-    def __init__(self):
-        pass
-
-    constraints = []

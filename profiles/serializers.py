@@ -48,14 +48,14 @@ class ArtistSignupSerializer(serializers.ModelSerializer):
         return artist
 
 # Basic user serializer for nested representation
-class UserSerializer(serializers.ModelSerializer):
+class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'username', 'email', 'first_name', 'last_name']
 
 # Profile serializer linking to the above UserSerializer
 class ProfileSerializer(serializers.ModelSerializer):
-    user = UserSerializer(read_only=True)
+    user = CustomUserSerializer(read_only=True)
     profile_picture = serializers.SerializerMethodField()
 
     class Meta:
@@ -120,7 +120,7 @@ class VirtualInteractiveArtSerializer(ImageFieldSerializerMixin):
 
 # Artist
 class ArtistSerializer(serializers.ModelSerializer):
-    user = UserSerializer(read_only=True)
+    user = CustomUserSerializer(read_only=True)
     profile_picture = serializers.SerializerMethodField()
     blockchain_address = serializers.CharField(required=False, allow_blank=True)
 
@@ -133,7 +133,7 @@ class ArtistSerializer(serializers.ModelSerializer):
 
 # Aesthetic Moment
 class AestheticMomentSerializer(serializers.ModelSerializer):
-    user = UserSerializer(read_only=True)
+    user = CustomUserSerializer(read_only=True)
     image = serializers.SerializerMethodField()
     video = serializers.SerializerMethodField()
 
@@ -149,8 +149,8 @@ class AestheticMomentSerializer(serializers.ModelSerializer):
 
 # Notification
 class NotificationSerializer(serializers.ModelSerializer):
-    sender = UserSerializer(read_only=True)
-    recipient = UserSerializer(read_only=True)
+    sender = CustomUserSerializer(read_only=True)
+    recipient = CustomUserSerializer(read_only=True)
     post = serializers.PrimaryKeyRelatedField(read_only=True)
 
     class Meta:
@@ -165,7 +165,7 @@ class SubscriptionPlanSerializer(serializers.ModelSerializer):
 
 class UserSubscriptionSerializer(serializers.ModelSerializer):
     plan = SubscriptionPlanSerializer(read_only=True)
-    user = UserSerializer(read_only=True)
+    user = CustomUserSerializer(read_only=True)
 
     class Meta:
         model = UserSubscription
@@ -173,7 +173,7 @@ class UserSubscriptionSerializer(serializers.ModelSerializer):
 
 # Blockchain
 class BlockchainWalletSerializer(serializers.ModelSerializer):
-    user = UserSerializer(read_only=True)
+    user = CustomUserSerializer(read_only=True)
 
     class Meta:
         model = BlockchainWallet
@@ -185,7 +185,7 @@ class BlockchainWalletSerializer(serializers.ModelSerializer):
         return value
 
 class EthereumTransactionSerializer(serializers.ModelSerializer):
-    user = UserSerializer(read_only=True)
+    user = CustomUserSerializer(read_only=True)
 
     class Meta:
         model = EthereumTransaction
@@ -198,7 +198,7 @@ class EthereumTransactionSerializer(serializers.ModelSerializer):
 
 # Posts & Interactions
 class PostSerializer(serializers.ModelSerializer):
-    user = UserSerializer(read_only=True)
+    user = CustomUserSerializer(read_only=True)
     likes = serializers.SerializerMethodField()
     image = serializers.SerializerMethodField()
 
@@ -213,7 +213,7 @@ class PostSerializer(serializers.ModelSerializer):
         return build_absolute_uri(self.context, obj.image)
 
 class LikeSerializer(serializers.ModelSerializer):
-    user = UserSerializer(read_only=True)
+    user = CustomUserSerializer(read_only=True)
     post = PostSerializer(read_only=True)
 
     class Meta:
@@ -221,7 +221,7 @@ class LikeSerializer(serializers.ModelSerializer):
         fields = ['id', 'user', 'post', 'created_at']
 
 class FeedbackSerializer(serializers.ModelSerializer):
-    user = UserSerializer(read_only=True)
+    user = CustomUserSerializer(read_only=True)
 
     class Meta:
         model = Feedback

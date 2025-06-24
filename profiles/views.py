@@ -21,7 +21,7 @@ from django.conf import settings
 
 from rest_framework.decorators import api_view
 from .serializers import (
-    ArtworkSerializer, FineArtSerializer, ArtistSerializer, ThriftStoreItemSerializer, PaintingSerializer,
+    ArtworkSerializer, FineArtSerializer, ThriftStoreItemSerializer, PaintingSerializer,
     DrawingArtworkSerializer, NotificationSerializer, SubscriptionPlanSerializer, EthereumTransactionSerializer, PostSerializer,
     AestheticMomentSerializer, CinematographyGallerySerializer, PhotographyContentSerializer, ArtGallerySerializer, ArtCategorySerializer, ConceptualMixedMediaSerializer,
     FashionArtSerializer, VirtualInteractiveArtSerializer
@@ -48,6 +48,26 @@ from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from .models import Artist
 from .serializers import ArtistSerializer
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from .models import CustomUser
+from .serializers import CustomUserSerializer
+
+@api_view(['POST'])
+def google_signup(request):
+    email = request.data.get('email')
+    username = request.data.get('username')
+    google_id = request.data.get('google_id')
+    profile_image_url = request.data.get('profile_image_url')
+
+    user, created = CustomUser.objects.get_or_create(email=email, defaults={
+        'username': username,
+        'google_id': google_id,
+        'profile_image_url': profile_image_url,
+        'is_artist': True,
+    })
+
+    return Response(CustomUserSerializer(user).data)
 
 class AllArtistsAPIView(APIView):
     permission_classes = [AllowAny]

@@ -14,8 +14,8 @@ from .views import (
     ArtworkViewSet, FineArtViewSet, ArtistViewSet, ThriftStoreItemViewSet,
     PaintingViewSet, DrawingViewSet, NotificationViewSet, SubscriptionPlanViewSet,
     EthereumTransactionViewSet, PostViewSet, AestheticMomentViewSet,
-    CinematographyGalleryViewSet, PhotographyContentViewSet, ArtGalleryViewSet,
-    ArtCategoryViewSet, ConceptualMixedMediaViewSet, FashionArtViewSet,
+    CinematographyGalleryViewSet, ArtGalleryViewSet,
+    ArtCategoryViewSet, ConceptualMixedMediaViewSet,
     VirtualInteractiveArtViewSet, ArtistLoginView, LoginView, PhotographyCinematicsViewSet,
     AbstractArtViewSet, FashionWearableArtViewSet, FineArtsViewSet,
 )
@@ -50,7 +50,7 @@ router.register(r'fine-arts', FineArtsViewSet, basename='fine-arts')
 urlpatterns = [
     # Behance API endpoint
     path("api/behance/", views.get_behance_artworks),
-
+    path('google-signup/', views.google_signup),
     # Admin & Static Pages
     path('admin/', admin.site.urls),
     path('api/home/', views.home, name='api_home'),

@@ -154,6 +154,7 @@ Q_CLUSTER = {
 }
 
 
+AUTH_USER_MODEL = 'profiles.CustomUser'
 
 CSP_IMG_SRC = (
     "'self'",
