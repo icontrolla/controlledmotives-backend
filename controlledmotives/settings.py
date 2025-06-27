@@ -4,30 +4,16 @@ from decouple import config
 import dj_database_url
 import warnings
 
-
-warnings.filterwarnings(
-    "ignore",
-    message=".*USERNAME_REQUIRED is deprecated.*",
-    module="dj_rest_auth.registration.serializers"
-)
-warnings.filterwarnings(
-    "ignore",
-    message=".*EMAIL_REQUIRED is deprecated.*",
-    module="dj_rest_auth.registration.serializers"
-)
-
+# Suppress specific deprecation warnings
+warnings.filterwarnings("ignore", message=".*USERNAME_REQUIRED is deprecated.*", module="dj_rest_auth.registration.serializers")
+warnings.filterwarnings("ignore", message=".*EMAIL_REQUIRED is deprecated.*", module="dj_rest_auth.registration.serializers")
 
 DJANGO_ENV = os.getenv("DJANGO_ENV", "development")
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-#SECRET_KEY = config('SECRET_KEY')
 SECRET_KEY = 'skdummy123'
 DEBUG = config('DEBUG', default=False, cast=bool)
-#NFT_STORAGE_API_KEY = config('NFT_STORAGE_API_KEY')
-#STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY', default='sk_test_dummy1234567890')
-
 
 ALLOWED_HOSTS = [
     "https://controntrolledmotives-frontend-1.onrender.com",
@@ -37,60 +23,49 @@ ALLOWED_HOSTS = [
     "127.0.0.1",
 ]
 
-
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-
 LOGIN_REDIRECT_URL = 'https://controntrolledmotives-frontend-1.onrender.com'
-
-
-
 
 CSRF_TRUSTED_ORIGINS = [
     "https://controntrolledmotives-frontend-1.onrender.com",
     "https://controlledmotives-backend.onrender.com",
     "https://controlledmotives.art",
-
 ]
 
 SESSION_COOKIE_SAMESITE = 'None'
 SESSION_COOKIE_SECURE = True
-
 CSRF_COOKIE_SAMESITE = 'None'
 CSRF_COOKIE_SECURE = True
 
-
-
-# Static and Media files
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'frontend/static')]
 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 CSP_SCRIPT_SRC = ("'self'", "'unsafe-eval'")
+CSP_IMG_SRC = (
+    "'self'",
+    "data:",
+    "https://controlled-media.s3.us-east-005.backblazeb2.com",
+)
 
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',  # ← this is okay
-    ],
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ],
+    'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.IsAuthenticated'],
+    'DEFAULT_AUTHENTICATION_CLASSES': ['rest_framework_simplejwt.authentication.JWTAuthentication'],
 }
 
-
-
-# CORS settings
-
 CORS_ALLOWED_ORIGINS = [
-    'http://controlledmotives-backend.onrender.com',  # Render frontend
+    "http://controlledmotives-backend.onrender.com",
     "https://controntrolledmotives-frontend-1.onrender.com",
-    'https://controlledmotives.art',  # Production frontend
+    "https://controlledmotives.art",
     "http://localhost:3000",
 ]
+CORS_ALLOW_CREDENTIALS = True
+CORS_URLS_REGEX = r"^/.*$"
 
-
-# Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -101,75 +76,35 @@ INSTALLED_APPS = [
     'corsheaders',
     'django.contrib.sites',
     'allauth',
-    "django_extensions",
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'rest_framework',
     'rest_framework.authtoken',
-    'profiles',
     'dj_rest_auth',
     'dj_rest_auth.registration',
+    'profiles',
     'django_q',
+    "django_extensions",
 ]
 
-AUTHENTICATION_BACKENDS = (
-    'allauth.account.auth_backends.AuthenticationBackend',
-)
-
-SITE_ID = 1  # This should match the ID of the site you created
-
-
-# Middleware settings
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'csp.middleware.CSPMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    'csp.middleware.CSPMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
-    'django.middleware.common.CommonMiddleware',
     'allauth.account.middleware.AccountMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
-
 ]
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-# URL configuration
 ROOT_URLCONF = 'profiles.urls'
+WSGI_APPLICATION = 'controlledmotives.wsgi.application'
 
-Q_CLUSTER = {
-    "name": "controlled-motives",
-    "workers": 4,
-    "retry": 3600,
-    "timeout": 3000,
-    "queue_limit": 50,
-    "bulk": 10,
-    "orm": "default",
-}
-
-
-AUTH_USER_MODEL = 'profiles.CustomUser'
-
-
-ACCOUNT_USERNAME_REQUIRED = True
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_AUTHENTICATION_METHOD = 'username_email'  # ✅ official allauth way
-ACCOUNT_SIGNUP_FIELDS = ['username', 'email', 'password1', 'password2']
-
-CSP_IMG_SRC = (
-    "'self'",
-    "data:",
-    "https://controlled-media.s3.us-east-005.backblazeb2.com",
-)
-
-
-# Templates settings
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -186,26 +121,49 @@ TEMPLATES = [
     },
 ]
 
+AUTH_USER_MODEL = 'profiles.CustomUser'
+
+# Signup/Login unified setup
+ACCOUNT_LOGIN_METHODS = {'email', 'username'}
+ACCOUNT_SIGNUP_FIELDS = ['username', 'email', 'password1', 'password2']
+ACCOUNT_EMAIL_VERIFICATION = 'optional'
+SOCIALACCOUNT_QUERY_EMAIL = True
+SOCIALACCOUNT_EMAIL_REQUIRED = True
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': ['profile', 'email'],
+        'AUTH_PARAMS': {'access_type': 'online'}
+    }
+}
 
 
+AUTHENTICATION_BACKENDS = [
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+SITE_ID = 1
+
+# Email
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = config('EMAIL_HOST', default='smtp.gmail.com')
+EMAIL_PORT = config('EMAIL_PORT', default=587, cast=int)
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'walternyika20@gmail.com'
+EMAIL_HOST_PASSWORD = 'Controll3r@123'
+
+# AWS (Backblaze B2)
 DEFAULT_FILE_STORAGE = 'controlledmotives.storage_backends.MediaStorage'
-
-
 AWS_ACCESS_KEY_ID = '0051d74288f85ef0000000003'
 AWS_SECRET_ACCESS_KEY = 'K005DrjWYhvXjb2Csfg/MlXTQMfmBWg'
 AWS_STORAGE_BUCKET_NAME = 'controlled-media'
-AWS_S3_REGION_NAME = 'us-east-005'  # Always use 'us-west-000' for B2
+AWS_S3_REGION_NAME = 'us-east-005'
 AWS_S3_ENDPOINT_URL = 'https://s3.us-east-005.backblazeb2.com'
 AWS_S3_ADDRESSING_STYLE = "virtual"
-AWS_QUERYSTRING_AUTH = False  # Set to True if bucket is private
-
-# Optional cache control for static/media
+AWS_QUERYSTRING_AUTH = False
 AWS_DEFAULT_ACL = None
 
-
-# WSGI application
-WSGI_APPLICATION = 'controlledmotives.wsgi.application'
-
+# Database
 if DJANGO_ENV == "production":
     DATABASES = {
         'default': dj_database_url.config(
@@ -213,7 +171,6 @@ if DJANGO_ENV == "production":
         )
     }
 else:
-    # SQLite for development
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -221,14 +178,18 @@ else:
         }
     }
 
-CORS_ALLOW_CREDENTIALS = True
-CORS_URLS_REGEX = r"^/.*$"
-
-# Redis configuration (optional, for caching and sessions)
+# Redis (optional)
 REDIS_URL = config('REDIS_URL', default='redis://localhost:6379/0')
 
+# Sessions
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 
-
+# Cache (local)
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+    }
+}
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -238,90 +199,39 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-ACCOUNT_LOGIN_METHODS = {'email'}
-
-ACCOUNT_SIGNUP_FIELDS = ['email', 'password1', 'password2']
-
-ACCOUNT_EMAIL_VERIFICATION = "optional"  # or "mandatory" if you want email verification
-SOCIALACCOUNT_QUERY_EMAIL = True
-SOCIALACCOUNT_EMAIL_REQUIRED = True
-
-SOCIALACCOUNT_PROVIDERS = {
-    'google': {
-        'SCOPE': [
-            'profile',
-            'email',
-        ],
-        'AUTH_PARAMS': {
-            'access_type': 'online',
-        }
-    }
+# Q Cluster for task queueing
+Q_CLUSTER = {
+    "name": "controlled-motives",
+    "workers": 4,
+    "retry": 3600,
+    "timeout": 3000,
+    "queue_limit": 50,
+    "bulk": 10,
+    "orm": "default",
 }
 
-
-# Email settings (optional, for sending emails)
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = config('EMAIL_HOST', default='smtp.gmail.com')
-EMAIL_PORT = config('EMAIL_PORT', default=587, cast=int)
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'walternyika20@gmail.com'
-EMAIL_HOST_PASSWORD = 'Controll3r@123'
-
-# Cache settings (optional, if using Redis for caching)
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-    }
-}
-
-SESSION_ENGINE = 'django.contrib.sessions.backends.db'
-
-
+# Serializers
 ACCOUNT_ADAPTER = 'allauth.account.adapter.DefaultAccountAdapter'
-
 REST_AUTH_REGISTER_SERIALIZERS = {
     'REGISTER_SERIALIZER': 'controlledmotives.serializers.UserSerializer'
 }
 
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Internationalization
+# Admin
+ADMIN_URL = config('ADMIN_URL', default='admin/')
+
+# Logging
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {'console': {'level': 'DEBUG', 'class': 'logging.StreamHandler'}},
+    'loggers': {'django': {'handlers': ['console'], 'level': 'DEBUG', 'propagate': True}},
+}
+
+# Localization
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
-
-# Admin settings
-ADMIN_URL = config('ADMIN_URL', default='admin/')
-
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ),
-}
-
-
-CSRF_COOKIE_SECURE = True
-
-# Logging configuration (optional)
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'console': {
-            'level': 'DEBUG',
-            'class': 'logging.StreamHandler',
-        },
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['console'],
-            'level': 'DEBUG',
-            'propagate': True,
-        },
-    },
-}
-
-
