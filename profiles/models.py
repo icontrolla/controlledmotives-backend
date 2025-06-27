@@ -18,13 +18,12 @@ my_date = timezone.make_aware(datetime.datetime.now())
 
 class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)
-    google_id = models.CharField(max_length=255)
+    google_id = models.CharField(max_length=255, null=True, blank=True)
     profile_image_url = models.URLField(null=True, blank=True)
     is_artist = models.BooleanField(default=False)
 
     def __str__(self):
         return self.username
-
 
 # Thrift Store Item Model
 class ThriftStoreItem(models.Model):

@@ -156,6 +156,12 @@ Q_CLUSTER = {
 
 AUTH_USER_MODEL = 'profiles.CustomUser'
 
+
+ACCOUNT_USERNAME_REQUIRED = True
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email'  # ✅ official allauth way
+ACCOUNT_SIGNUP_FIELDS = ['username', 'email', 'password1', 'password2']
+
 CSP_IMG_SRC = (
     "'self'",
     "data:",
@@ -232,9 +238,9 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-ACCOUNT_LOGIN_METHODS = {'email', 'username'}  # Both allowed
-ACCOUNT_SIGNUP_FIELDS = ['email', 'username', 'password1', 'password2']
+ACCOUNT_LOGIN_METHODS = {'email'}
 
+ACCOUNT_SIGNUP_FIELDS = ['email', 'password1', 'password2']
 
 ACCOUNT_EMAIL_VERIFICATION = "optional"  # or "mandatory" if you want email verification
 SOCIALACCOUNT_QUERY_EMAIL = True
