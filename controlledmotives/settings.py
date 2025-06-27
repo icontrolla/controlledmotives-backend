@@ -232,7 +232,9 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
+ACCOUNT_LOGIN_METHODS = {'email', 'username'}  # Both allowed
 ACCOUNT_SIGNUP_FIELDS = ['email', 'username', 'password1', 'password2']
+
 
 ACCOUNT_EMAIL_VERIFICATION = "optional"  # or "mandatory" if you want email verification
 SOCIALACCOUNT_QUERY_EMAIL = True
